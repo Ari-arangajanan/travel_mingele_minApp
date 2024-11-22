@@ -7,6 +7,7 @@ const AppRout: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/page" element={<Home />} />
       </Routes>
     </Router>
   );
