@@ -1,0 +1,48 @@
+/* categoryBar.css */
+
+.category-bar {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent wrapping of items */
+  padding: 5px 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin; /* For Firefox */
+  cursor: grab; /* Show grab cursor when hovering */
+}
+
+.category-bar::-webkit-scrollbar {
+  height: 10px; /* Adjust scrollbar height */
+}
+
+.category-bar::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3; /* Customize scrollbar color */
+  border-radius: 8px; /* Round edges of the scrollbar */
+}
+
+/* Styles for each category item */
+.category-item {
+  flex: 0 0 auto; /* Prevent shrinking and ensure horizontal alignment */
+  margin: 0 8px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #1f1d2f;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for category items */
+.category-item:hover {
+  background-color: #1f1d2f;
+}
+
+/* Active state for category items */
+.category-item.active {
+  background-color: #333131;
+  transition: margin-right 2s;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+}

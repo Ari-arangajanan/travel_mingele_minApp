@@ -1,18 +1,76 @@
-import { AppBar, Box } from "@mui/material";
+import { AppBar, Box, Toolbar } from "@mui/material";
 import React, { Fragment } from "react";
 import NavBar from "../../Components/NavBar";
-import Button from "../../Components/Button";
+import Card from "../../Components/Card";
+import CategoryBAr from "../../Components/CategoryBAr";
+
+const cardData = [
+  {
+    imageUrl: "https://via.placeholder.com/128",
+    title: "Premium License",
+    description: "High resolution 3840x2160 • PNG",
+    price: "$49.00",
+    id: "1001234",
+  },
+  {
+    imageUrl: "https://via.placeholder.com/128",
+    title: "Standard License",
+    description: "Full resolution 1920x1080 • JPEG",
+    price: "$19.00",
+    id: "1001235",
+  },
+  {
+    imageUrl: "https://via.placeholder.com/128",
+    title: "Basic License",
+    description: "Low resolution 1280x720 • JPEG",
+    price: "$9.00",
+    id: "1001236",
+  },
+];
 
 const Home: React.FC = () => {
+  const handleRemove = (id: string) => {
+    console.log(`Remove clicked for ID: ${id}`);
+  };
+
   return (
     <>
       <Fragment>
         <AppBar position="fixed">
           <NavBar />
         </AppBar>
-        <Button children="Button" onClick={() => console.log("clocked")} />
-        <Box>
-          <h1>sample</h1>
+        {/* Spacer to prevent content overlap with AppBar */}
+        <Toolbar />
+        <Box
+          position="fixed"
+          sx={{
+            position: "sticky",
+            top: "40px", // Adjust based on AppBar height (default is 64px for desktop)
+            backgroundColor: "#f4f4f4", // Optional background color
+            zIndex: 1,
+            padding: 2,
+          }}
+        >
+          <CategoryBAr />
+        </Box>
+
+        {/* <Button children="Button" onClick={() => console.log("clocked")} /> */}
+        <Box sx={{ marginTop: 2, padding: 2 }}>
+          <div className="app-container">
+            {cardData.map((card, index) => (
+              <div key={index} className="card-box">
+                <Card
+                  key={card.id}
+                  imageUrl={card.imageUrl}
+                  title={card.title}
+                  description={card.description}
+                  price={card.price}
+                  id={card.id}
+                  onRemove={() => handleRemove(card.id)}
+                />
+              </div>
+            ))}
+          </div>
         </Box>
       </Fragment>
     </>
