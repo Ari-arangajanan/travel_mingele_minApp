@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
+import Button from "./Button";
 
 const Img = styled("img")({
   margin: "auto",
@@ -18,7 +19,7 @@ interface CardProps {
   description: string;
   price: string;
   id: string;
-  onRemove: () => void;
+  handleClick: () => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -27,7 +28,7 @@ const Card: React.FC<CardProps> = ({
   description,
   price,
   id,
-  onRemove,
+  handleClick,
 }) => {
   return (
     <Paper
@@ -59,13 +60,11 @@ const Card: React.FC<CardProps> = ({
               </Typography>
             </Grid>
             <Grid item>
-              <Typography
-                sx={{ cursor: "pointer", color: "red" }}
-                variant="body2"
-                onClick={onRemove}
-              >
-                Look
-              </Typography>
+              <Button
+                children="See more"
+                color="primary"
+                onClick={handleClick}
+              />
             </Grid>
           </Grid>
           <Grid item>

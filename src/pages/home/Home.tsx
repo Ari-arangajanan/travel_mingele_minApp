@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import NavBar from "../../Components/NavBar";
 import Card from "../../Components/Card";
 import CategoryBAr from "../../Components/CategoryBAr";
+import { useNavigate } from "react-router-dom";
 
 const cardData = [
   {
@@ -29,8 +30,11 @@ const cardData = [
 ];
 
 const Home: React.FC = () => {
-  const handleRemove = (id: string) => {
-    console.log(`Remove clicked for ID: ${id}`);
+  const navigate = useNavigate();
+
+  const handleSeeMore = (id: string) => {
+    navigate(`/details/${id}`);
+    console.log(`see more clicked for ID: ${id}`);
   };
 
   return (
@@ -55,7 +59,7 @@ const Home: React.FC = () => {
         </Box>
 
         {/* <Button children="Button" onClick={() => console.log("clocked")} /> */}
-        <Box sx={{ marginTop: 2, padding: 2 }}>
+        <Box sx={{ marginTop: 1, padding: 2 }}>
           <div className="app-container">
             {cardData.map((card, index) => (
               <div key={index} className="card-box">
@@ -66,7 +70,7 @@ const Home: React.FC = () => {
                   description={card.description}
                   price={card.price}
                   id={card.id}
-                  onRemove={() => handleRemove(card.id)}
+                  handleClick={() => handleSeeMore(card.id)}
                 />
               </div>
             ))}
