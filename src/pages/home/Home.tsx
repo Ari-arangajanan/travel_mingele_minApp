@@ -37,11 +37,16 @@ const Home: React.FC = () => {
     console.log(`see more clicked for ID: ${id}`);
   };
 
+  const handleBack = () => {
+    // Logic for back button (e.g., navigate back)
+    console.log("handleBack");
+  };
+
   return (
     <>
       <Fragment>
         <AppBar position="fixed">
-          <NavBar />
+          <NavBar handleBack={handleBack} />
         </AppBar>
         {/* Spacer to prevent content overlap with AppBar */}
         <Toolbar />

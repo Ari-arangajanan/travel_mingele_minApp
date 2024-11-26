@@ -20,7 +20,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const NavBar = () => {
+interface Props {
+  handleBack: () => void;
+}
+
+const NavBar: React.FC<Props> = ({ handleBack }) => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -44,11 +48,6 @@ const NavBar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const handleBack = () => {
-    // Logic for back button (e.g., navigate back)
-    console.log("handleBack");
   };
 
   return (
