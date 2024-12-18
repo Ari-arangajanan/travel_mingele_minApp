@@ -1,3 +1,7 @@
+import {
+  GetCategoryReq,
+  GetCategoryRes,
+} from "../../Components/Interfaces/CategoryInterface";
 import ApiCalls from "./ApiCalls";
 
 interface ServiceProviderListResponse {
@@ -16,17 +20,15 @@ interface ServiceProviderListRequest {
 }
 
 const UseNetworkCalls = () => {
-  const ServiceProviderListRequest = (
-    params: ServiceProviderListRequest = {}
-  ): Promise<ServiceProviderListResponse> => {
-    const { page = 0, limit = 10, userName = "" } = params;
-    const payload = {
-      page,
-      limit,
-      ...(userName && { userName }),
+  const getServiceCategory = (
+    params: GetCategoryReq
+  ): Promise<GetCategoryRes> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
     };
-    return ApiCalls<ServiceProviderListResponse>({
-      endpoint: "/admin/systemUser/serviceProviderList",
+    return ApiCalls<GetCategoryRes>({
+      endpoint: "/app/category/getAllCategory",
       method: "POST",
       data: payload,
       headers: {
@@ -34,7 +36,8 @@ const UseNetworkCalls = () => {
       },
     });
   };
-  return { ServiceProviderListRequest };
+
+  return { getServiceCategory };
 };
 
 export default UseNetworkCalls;

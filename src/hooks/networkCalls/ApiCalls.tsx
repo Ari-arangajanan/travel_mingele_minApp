@@ -13,9 +13,11 @@ const ApiCalls = async <T,>({
   data = null,
   headers = {},
 }: ApiCallsParam): Promise<T> => {
+  const baseURL = import.meta.env.VITE_BASE_URL; // Define your base URL in environment variables
+  const url = `${baseURL}${endpoint}`;
   try {
     const response = await axios({
-      url: endpoint,
+      url,
       method,
       data,
       headers,
