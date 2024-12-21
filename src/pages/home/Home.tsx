@@ -6,44 +6,39 @@ import CategoryBAr from "../../Components/CategoryBAr";
 import { useNavigate } from "react-router-dom";
 import { GetCategoryRes } from "../../Components/Interfaces/CategoryInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
+import {
+  GetServicesRequest,
+  GetServicesResponse,
+} from "../../Components/Interfaces/ServiceInterface";
 
-const cardData = [
-  {
-    imageUrl: "https://via.placeholder.com/128",
-    title: "Premium License",
-    description: "High resolution 3840x2160 • PNG",
-    price: "$49.00",
-    id: "1001234",
-  },
-  {
-    imageUrl: "https://via.placeholder.com/128",
-    title: "Standard License",
-    description: "Full resolution 1920x1080 • JPEG",
-    price: "$19.00",
-    id: "1001235",
-  },
-  {
-    imageUrl: "https://via.placeholder.com/128",
-    title: "Basic License",
-    description: "Low resolution 1280x720 • JPEG",
-    price: "$9.00",
-    id: "1001236",
-  },
-];
-
-const categories = [
-  "Hotels",
-  "Vehicle",
-  "Guide",
-  "Guest House",
-  "Resorts",
-  "Cottages",
-  "Apartments",
-  "Hostels",
-];
+// const cardData = [
+//   {
+//     imageUrl: "https://via.placeholder.com/128",
+//     title: "Premium License",
+//     description: "High resolution 3840x2160 • PNG",
+//     price: "$49.00",
+//     id: "1001234",
+//   },
+//   {
+//     imageUrl: "https://via.placeholder.com/128",
+//     title: "Standard License",
+//     description: "Full resolution 1920x1080 • JPEG",
+//     price: "$19.00",
+//     id: "1001235",
+//   },
+//   {
+//     imageUrl: "https://via.placeholder.com/128",
+//     title: "Basic License",
+//     description: "Low resolution 1280x720 • JPEG",
+//     price: "$9.00",
+//     id: "1001236",
+//   },
+// ];
 
 const Home: React.FC = () => {
   const [categoryData, setCategoryData] = useState<GetCategoryRes | null>(null);
+  const [serviceDataData, setServiceDataData] =
+    useState<GetServicesResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -54,7 +49,7 @@ const Home: React.FC = () => {
     userName: "",
   });
   const [open, setOpen] = useState(false);
-  const { getServiceCategory } = UseNetworkCalls();
+  const { getServiceCategory, getServiceByCategoryId } = UseNetworkCalls();
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -75,6 +70,8 @@ const Home: React.FC = () => {
         setTotalRecords(response.totalElements);
       } catch (error: any) {
         alert("error Occurred");
+        navigate("/");
+        setError(error.message);
       }
     };
     fetchCategoryData();
@@ -100,9 +97,43 @@ const Home: React.FC = () => {
     setPage(0); // Reset to the first page
   };
 
-  const handleCategoryClick = (categoryId: number) => {
+  const handleCategoryClick = async (categoryId: number) => {
     console.log(`Selected category: ${categoryId}`);
+    setLoading(true);
+    try {
+      const params: GetServicesRequest = {
+        categoryId,
+        page,
+        limit: rowsPerPage,
+      };
+      try {
+        const response = await getServiceByCategoryId(params);
+        console.log("responce", response);
+
+        setServiceDataData(response);
+        console.log(serviceDataData);
+
+        setTotalRecords(response.totalElements);
+      } catch (error: any) {
+        alert("error Occurred");
+        navigate("/");
+        setError(error.message);
+      }
+    } catch (err: any) {}
   };
+
+  // transform data tpo convert to card data
+  const transformToCardData = (services: GetServicesResponse["content"]) => {
+    return services.map((service) => ({
+      imageUrl: "https://via.placeholder.com/128", // Placeholder for now; replace with actual image URL if available
+      title: service.serviceName, // Map service name to title
+      description: `${service.description} • Price: $${service.basePrice}`, // Combine description and price
+      price: `$${service.basePrice.toFixed(2)}`, // Format price with two decimals
+      id: service.id.toString(), // Convert numeric ID to string
+    }));
+  };
+
+  const cardData = transformToCardData(serviceDataData?.content || []);
 
   return (
     <>

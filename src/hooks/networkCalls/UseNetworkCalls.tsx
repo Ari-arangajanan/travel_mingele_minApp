@@ -3,6 +3,10 @@ import {
   GetCategoryRes,
 } from "../../Components/Interfaces/CategoryInterface";
 import {
+  GetServicesRequest,
+  GetServicesResponse,
+} from "../../Components/Interfaces/ServiceInterface";
+import {
   TelegramIdRequest,
   TokenResponse,
 } from "../../Components/Interfaces/TokenInterface";
@@ -17,7 +21,7 @@ const UseNetworkCalls = () => {
       ...params,
     };
     return ApiCalls<GetCategoryRes>({
-      endpoint: "app/category/getAllCategory",
+      endpoint: "app/user/category/getAllCategory",
       method: "POST",
       data: payload,
       headers: {
@@ -41,7 +45,24 @@ const UseNetworkCalls = () => {
     });
   };
 
-  return { getServiceCategory, login };
+  const getServiceByCategoryId = (
+    params: GetServicesRequest
+  ): Promise<GetServicesResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<GetServicesResponse>({
+      endpoint: "app/user/service/getServices",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  return { getServiceCategory, login, getServiceByCategoryId };
 };
 
 export default UseNetworkCalls;
