@@ -1,12 +1,13 @@
 import { AppBar, Box } from "@mui/material";
 import React, { Fragment } from "react";
-import NavBar from "./NavBar";
-import { useNavigate } from "react-router-dom";
+import NavBar from "../../Components/NavBar";
+import { NavigationUtils } from "../../router/NavigationUtils";
+import { ROUTES } from "../../router/Routs";
 
 const CardDetails = () => {
-  const navigate = useNavigate();
+  const { navigateTo } = NavigationUtils();
   const handleBack = () => {
-    navigate(`/`);
+    navigateTo(ROUTES.HOME);
     // Logic for back button (e.g., navigate back)
     console.log("handleBack");
   };

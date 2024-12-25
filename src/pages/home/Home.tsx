@@ -141,8 +141,6 @@ const Home: React.FC = () => {
         <AppBar position="fixed">
           <NavBar handleBack={handleBack} />
         </AppBar>
-        {/* Spacer to prevent content overlap with AppBar */}
-        <Toolbar />
         <Box
           position="fixed"
           sx={{

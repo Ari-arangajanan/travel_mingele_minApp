@@ -16,6 +16,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { ROUTES } from "../router/Routs";
+import { NavigationUtils } from "../router/NavigationUtils";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -26,7 +28,8 @@ interface Props {
 
 const NavBar: React.FC<Props> = ({ handleBack }) => {
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname === "/home";
+  const { navigateTo } = NavigationUtils();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -46,8 +49,10 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (name: string) => {
     setAnchorElUser(null);
+    alert(`User menu clicked, ${name}`);
+    navigateTo(ROUTES.DASHBOARD, { name });
   };
 
   return (
@@ -183,7 +188,10 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleCloseUserMenu(setting)}
+                  >
                     <Typography sx={{ textAlign: "center" }}>
                       {setting}
                     </Typography>
