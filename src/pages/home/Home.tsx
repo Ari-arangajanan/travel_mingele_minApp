@@ -146,11 +146,12 @@ const Home: React.FC = () => {
         <Box
           position="fixed"
           sx={{
-            position: "sticky",
-            top: "40px", // Adjust based on AppBar height (default is 64px for desktop)
+            position: "fixed",
+            top: "60px", // Adjust based on AppBar height (default is 64px for desktop)
             backgroundColor: "#f4f4f4", // Optional background color
             zIndex: 1,
-            padding: 2,
+            // padding: 2,
+            width: "100%",
           }}
         >
           <CategoryBAr

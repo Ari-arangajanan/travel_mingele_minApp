@@ -33,7 +33,7 @@ const CategoryBar: React.FC<CategoryProps> = ({
   };
 
   return (
-    <Box sx={{ maxWidth: { xs: 346, sm: 600 }, bgcolor: "background.paper" }}>
+    <Box sx={{ maxWidth: "100%", bgcolor: "background.paper", margin: "auto" }}>
       <Tabs
         value={value}
         onChange={handleChange}
