@@ -19,7 +19,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ROUTES } from "../router/Routs";
 import { NavigationUtils } from "../router/NavigationUtils";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Products", "Pricing", "About"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 interface Props {
@@ -28,7 +28,7 @@ interface Props {
 
 const NavBar: React.FC<Props> = ({ handleBack }) => {
   const location = useLocation();
-  const isHomePage = location.pathname === "/home";
+  const isHomePage = location.pathname === ROUTES.HOME;
   const { navigateTo } = NavigationUtils();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -40,9 +40,11 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
+    console.log("Nav menu clicked========", event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+    console.log("Nav menu clicked", event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -51,8 +53,32 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
 
   const handleCloseUserMenu = (name: string) => {
     setAnchorElUser(null);
-    alert(`User menu clicked, ${name}`);
-    navigateTo(ROUTES.DASHBOARD, { name });
+  };
+
+  const handleMenuClicks = (name: string) => {
+    setAnchorElUser(null); // Close the menu
+    if (name === "About") {
+      navigateTo(ROUTES.ABOUT, { name });
+    } else if (name === "Products") {
+      navigateTo(ROUTES.PRODUCTS, { name });
+    } else if (name === "Pricing") {
+      // navigateTo(ROUTES.PRICING, { name });
+    }
+  };
+
+  const handleUserMenuClicks = (name: string) => {
+    setAnchorElUser(null); // Close the menu
+    if (name === "Logout") {
+      localStorage.removeItem("token");
+      navigateTo(ROUTES.WELCOME, { name });
+    } else if (name === "Profile") {
+      navigateTo(ROUTES.PROFILE, { name });
+      console.log("Profile clicked", name);
+    } else if (name === "Account") {
+      navigateTo(ROUTES.ACCOUNT, { name });
+    } else if (name === "Dashboard") {
+      navigateTo(ROUTES.DASHBOARD, { name });
+    }
   };
 
   return (
@@ -116,7 +142,8 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                       key={page}
                       onClick={() => {
                         if (isHomePage) {
-                          handleCloseNavMenu(); // Only close the menu if on the home page
+                          handleMenuClicks(page); // Only close the menu if on the home page
+                          // console.log("Menu clicked+++++", page);
                         } else {
                           handleBack(); // Only navigate back if not on the home page
                         }
@@ -190,7 +217,7 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting}
-                    onClick={() => handleCloseUserMenu(setting)}
+                    onClick={() => handleUserMenuClicks(setting)}
                   >
                     <Typography sx={{ textAlign: "center" }}>
                       {setting}

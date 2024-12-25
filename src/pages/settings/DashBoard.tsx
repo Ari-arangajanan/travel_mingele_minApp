@@ -4,7 +4,7 @@ import NavBar from "../../Components/NavBar";
 import { NavigationUtils } from "../../router/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
 
-const CardDetails = () => {
+const DashBoard = () => {
   const { navigateTo } = NavigationUtils();
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
@@ -16,9 +16,9 @@ const CardDetails = () => {
       <AppBar position="fixed">
         <NavBar handleBack={handleBack} />
       </AppBar>
-      <Box>Details</Box>
+      <Box>Dash board</Box>
     </Fragment>
   );
 };
 
-export default CardDetails;
+export default DashBoard;

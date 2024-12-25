@@ -1,10 +1,10 @@
-import { AppBar, Box } from "@mui/material";
 import React, { Fragment } from "react";
-import NavBar from "../../Components/NavBar";
-import { NavigationUtils } from "../../router/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
+import { NavigationUtils } from "../../router/NavigationUtils";
+import { AppBar, Box } from "@mui/material";
+import NavBar from "../../Components/NavBar";
 
-const CardDetails = () => {
+const About = () => {
   const { navigateTo } = NavigationUtils();
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
@@ -16,9 +16,9 @@ const CardDetails = () => {
       <AppBar position="fixed">
         <NavBar handleBack={handleBack} />
       </AppBar>
-      <Box>Details</Box>
+      <Box>About</Box>
     </Fragment>
   );
 };
 
-export default CardDetails;
+export default About;

@@ -1,10 +1,10 @@
-import { AppBar, Box } from "@mui/material";
 import React, { Fragment } from "react";
-import NavBar from "../../Components/NavBar";
 import { NavigationUtils } from "../../router/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
+import { AppBar, Box } from "@mui/material";
+import NavBar from "../../Components/NavBar";
 
-const DashBoard = () => {
+const Account = () => {
   const { navigateTo } = NavigationUtils();
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
@@ -16,9 +16,9 @@ const DashBoard = () => {
       <AppBar position="fixed">
         <NavBar handleBack={handleBack} />
       </AppBar>
-      <Box>sample</Box>
+      <Box>Account</Box>
     </Fragment>
   );
 };
 
-export default DashBoard;
+export default Account;
