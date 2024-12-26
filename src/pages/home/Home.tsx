@@ -104,6 +104,7 @@ const Home: React.FC = () => {
     try {
       const params: GetServicesRequest = {
         categoryId,
+        telegramId: 0,
         page,
         limit: rowsPerPage,
       };

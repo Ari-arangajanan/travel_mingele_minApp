@@ -1,5 +1,6 @@
 export interface GetServicesRequest {
     categoryId: number; // ID of the category to fetch services for
+    telegramId: number; // Telegram ID of the user
     page: number; // Page number to fetch
     limit: number; // Number of items per page
   }
