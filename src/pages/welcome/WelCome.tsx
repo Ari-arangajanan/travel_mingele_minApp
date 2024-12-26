@@ -18,29 +18,29 @@ const WelCome: React.FC = () => {
           throw new Error("Telegram WebApp is not available");
         }
         // this is for testing
-        const response = await login({ telegram_id: 1552001035 });
-        if (response.token) {
-          localStorage.setItem("token", response.token);
-          setResponseToken(response);
-          navigate("/home");
-          console.log("JWT Token:", response.token);
-        }
-        // this is the real code
-        // const user = teleUser.initDataUnsafe?.user;
-        // if (user) {
-        //   setTelegramUser(user);
-        //   console.log("Telegram User:", user);
-        //   const response = await login({ telegram_id: user.id });
-        //   // const response = await login({ telegram_id: 1552001035 });
-        //   if (response.token) {
-        //     localStorage.setItem("token", response.token);
-        //     setResponseToken(response);
-        //     navigate("/home");
-        //     console.log("JWT Token:", response.token);
-        //   }
-        // } else {
-        //   throw new Error("Telegram User data not found");
+        // const response = await login({ telegram_id: 1552001035 });
+        // if (response.token) {
+        //   localStorage.setItem("token", response.token);
+        //   setResponseToken(response);
+        //   navigate("/home");
+        //   console.log("JWT Token:", response.token);
         // }
+        // this is the real code
+        const user = teleUser.initDataUnsafe?.user;
+        if (user) {
+          setTelegramUser(user);
+          console.log("Telegram User:", user);
+          const response = await login({ telegram_id: user.id });
+          // const response = await login({ telegram_id: 1552001035 });
+          if (response.token) {
+            localStorage.setItem("token", response.token);
+            setResponseToken(response);
+            navigate("/home");
+            console.log("JWT Token:", response.token);
+          }
+        } else {
+          throw new Error("Telegram User data not found");
+        }
       } catch (err: any) {
         setError(err.message);
         console.error("Error initializing Telegram WebApp:", err);

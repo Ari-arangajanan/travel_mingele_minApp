@@ -1,7 +1,7 @@
 import { AppBar, Box } from "@mui/material";
 import React, { Fragment } from "react";
 import NavBar from "../../Components/NavBar";
-import { NavigationUtils } from "../../router/NavigationUtils";
+import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
 
 const CardDetails = () => {

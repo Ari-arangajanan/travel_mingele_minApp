@@ -17,9 +17,9 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ROUTES } from "../router/Routs";
-import { NavigationUtils } from "../router/NavigationUtils";
+import { NavigationUtils } from "../utils/NavigationUtils";
 
-const pages = ["Products", "Pricing", "About"];
+const pages = ["Products", "About"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 interface Props {

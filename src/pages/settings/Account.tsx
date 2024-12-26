@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { NavigationUtils } from "../../router/NavigationUtils";
+import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
 import { AppBar, Box } from "@mui/material";
 import NavBar from "../../Components/NavBar";

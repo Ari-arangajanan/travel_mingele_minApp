@@ -45,7 +45,7 @@ const UseNetworkCalls = () => {
     });
   };
 
-  const getServiceByCategoryId = (
+  const getService = (
     params: GetServicesRequest
   ): Promise<GetServicesResponse> => {
     // Use the params object directly to construct the payload
@@ -62,7 +62,7 @@ const UseNetworkCalls = () => {
     });
   };
 
-  return { getServiceCategory, login, getServiceByCategoryId };
+  return { getServiceCategory, login, getService };
 };
 
 export default UseNetworkCalls;

@@ -10,6 +10,7 @@ import {
   GetServicesRequest,
   GetServicesResponse,
 } from "../../Components/Interfaces/ServiceInterface";
+import { transformToCardData } from "../../utils/CommonMethods";
 
 // const cardData = [
 //   {
@@ -49,7 +50,7 @@ const Home: React.FC = () => {
     userName: "",
   });
   const [open, setOpen] = useState(false);
-  const { getServiceCategory, getServiceByCategoryId } = UseNetworkCalls();
+  const { getServiceCategory, getService } = UseNetworkCalls();
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -107,7 +108,7 @@ const Home: React.FC = () => {
         limit: rowsPerPage,
       };
       try {
-        const response = await getServiceByCategoryId(params);
+        const response = await getService(params);
         console.log("responce", response);
 
         setServiceDataData(response);
@@ -122,16 +123,16 @@ const Home: React.FC = () => {
     } catch (err: any) {}
   };
 
-  // transform data tpo convert to card data
-  const transformToCardData = (services: GetServicesResponse["content"]) => {
-    return services.map((service) => ({
-      imageUrl: "https://via.placeholder.com/128", // Placeholder for now; replace with actual image URL if available
-      title: service.serviceName, // Map service name to title
-      description: `${service.description} • Price: $${service.basePrice}`, // Combine description and price
-      price: `$${service.basePrice.toFixed(2)}`, // Format price with two decimals
-      id: service.id.toString(), // Convert numeric ID to string
-    }));
-  };
+  // // transform data tpo convert to card data
+  // const transformToCardData = (services: GetServicesResponse["content"]) => {
+  //   return services.map((service) => ({
+  //     imageUrl: "https://via.placeholder.com/128", // Placeholder for now; replace with actual image URL if available
+  //     title: service.serviceName, // Map service name to title
+  //     description: `${service.description} • Price: $${service.basePrice}`, // Combine description and price
+  //     price: `$${service.basePrice.toFixed(2)}`, // Format price with two decimals
+  //     id: service.id.toString(), // Convert numeric ID to string
+  //   }));
+  // };
 
   const cardData = transformToCardData(serviceDataData?.content || []);
 
