@@ -22,4 +22,30 @@ interface Service {
       id: service.id.toString(), // Convert numeric ID to string
     }));
   };
+
+  export function getTelegramUser() {
+    const telegramUser = window.Telegram?.WebApp;
+    const appEnv = import.meta.env.VITE_APP_ENV; // Access the environment variable
+    const telegramId = Number(import.meta.env.VITE_APP_TELEGRAM_ID); // Access the hardcoded Telegram ID
+    
+    if (appEnv === "development") {
+        console.warn("Development environment detected. Returning hardcoded Telegram ID.");
+        return { id: telegramId }; // Return mock user object with hardcoded Telegram ID
+    }
+
+    if (!telegramUser) {
+        throw new Error("Telegram WebApp is not available");
+    }
+
+    // Retrieve the user object
+    const user = telegramUser.initDataUnsafe?.user;
+
+    if (!user) {
+        throw new Error("Telegram user data is unavailable in production environment.");
+    }
+
+    return user;
+}
+
+
   

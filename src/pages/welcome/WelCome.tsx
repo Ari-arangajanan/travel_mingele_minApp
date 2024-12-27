@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { useNavigate } from "react-router-dom";
+import { getTelegramUser } from "../../utils/CommonMethods";
 
 const WelCome: React.FC = () => {
   const [telegramUser, setTelegramUser] = useState<any | null>(null);
@@ -13,30 +14,15 @@ const WelCome: React.FC = () => {
   useEffect(() => {
     const fetchTelegramUser = async () => {
       try {
-        const teleUser = window.Telegram?.WebApp;
-        if (!teleUser) {
-          throw new Error("Telegram WebApp is not available");
-        }
-        // this is for testing
-        // const response = await login({ telegram_id: 1552001035 });
-        // if (response.token) {
-        //   localStorage.setItem("token", response.token);
-        //   setResponseToken(response);
-        //   navigate("/home");
-        //   console.log("JWT Token:", response.token);
-        // }
-        // this is the real code
-        const user = teleUser.initDataUnsafe?.user;
+        const user = getTelegramUser();
         if (user) {
           setTelegramUser(user);
-          console.log("Telegram User:", user);
           const response = await login({ telegram_id: user.id });
           // const response = await login({ telegram_id: 1552001035 });
           if (response.token) {
             localStorage.setItem("token", response.token);
-            setResponseToken(response);
+            setResponseToken(response); // save JWT token in state
             navigate("/home");
-            console.log("JWT Token:", response.token);
           }
         } else {
           throw new Error("Telegram User data not found");
