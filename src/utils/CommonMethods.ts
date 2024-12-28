@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 interface Service {
     serviceName: string;
     description: string;
@@ -46,6 +48,36 @@ interface Service {
 
     return user;
 }
+
+
+// Define the custom JWT payload interface
+interface CustomJwtPayload {
+  userType: string;
+  telegramId: number;
+  sub: string;
+  iat: number;
+  exp: number;
+}
+
+/**
+ * Decodes the JWT token stored in localStorage and extracts the user role.
+ * @returns {string | null} - The user's role (e.g., "SERVICE_PROVIDER/ USER") or null if not found.
+ */
+export const getUserDetail = (): CustomJwtPayload | null => {
+  try {
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+    if (!token) {
+      return null; // No token found
+    }
+
+    const decodedToken: CustomJwtPayload = jwtDecode<CustomJwtPayload>(token); // Decode the token
+    return decodedToken || null; // Return the userType (role) or null if not present
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null; // Return null if decoding fails
+  }
+};
+
 
 
   

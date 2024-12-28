@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { useNavigate } from "react-router-dom";
 import { getTelegramUser } from "../../utils/CommonMethods";
+import { jwtDecode } from "jwt-decode";
 
 const WelCome: React.FC = () => {
   const [telegramUser, setTelegramUser] = useState<any | null>(null);
@@ -18,10 +19,17 @@ const WelCome: React.FC = () => {
         if (user) {
           setTelegramUser(user);
           const response = await login({ telegram_id: user.id });
+          console.log("telegram IDDDDDDD logged in", user.id);
+
           // const response = await login({ telegram_id: 1552001035 });
           if (response.token) {
             localStorage.setItem("token", response.token);
             setResponseToken(response); // save JWT token in state
+            // const decodedToken = JSON.parse(atob(response.token.split(".")[1]));
+            // const decodedToken = jwtDecode(response.token);
+            // localStorage.setItem("user", JSON.stringify(decodedToken));
+
+            // console.log("decodedToken", decodedToken);
             navigate("/home");
           }
         } else {
