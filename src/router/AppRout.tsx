@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import { routeConfig } from "./RouteConfig";
+import { routeConfig } from "../Authentication/RouteConfig";
 import { ROUTES } from "./Routs";
 
 const AppRout: React.FC = () => {

@@ -18,9 +18,8 @@ import { useLocation } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ROUTES } from "../router/Routs";
 import { NavigationUtils } from "../utils/NavigationUtils";
-
-const pages = ["Products", "About"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { getUserDetail } from "../utils/CommonMethods";
+import { routeConfig } from "../Authentication/RouteConfig";
 
 interface Props {
   handleBack: () => void;
@@ -36,6 +35,20 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
+  );
+
+  // fetch the User role From token by Common method
+  const userRole = getUserDetail()?.userType;
+
+  // filter Accessible pages based on user role
+  const accessibleRoutes = routeConfig.filter(
+    (route) => route.roles.length === 0 || route.roles.includes(userRole || "")
+  );
+
+  // filter pages and settings based on authenticated user role permissions
+  const pages = accessibleRoutes.filter((route) => route.category === "page");
+  const settings = accessibleRoutes.filter(
+    (route) => route.category === "setting"
   );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,6 +69,7 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
   };
 
   const handleMenuClicks = (name: string) => {
+    console.log("Menu clicked+++++", name);
     setAnchorElUser(null); // Close the menu
     if (name === "About") {
       navigateTo(ROUTES.ABOUT, { name });
@@ -137,12 +151,12 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                   onClose={isHomePage ? handleCloseNavMenu : handleBack}
                   sx={{ display: { xs: "block", md: "none" } }}
                 >
-                  {pages.map((page) => (
+                  {pages.map((route) => (
                     <MenuItem
-                      key={page}
+                      key={route.path}
                       onClick={() => {
                         if (isHomePage) {
-                          handleMenuClicks(page); // Only close the menu if on the home page
+                          handleMenuClicks(route.name); // Only close the menu if on the home page
                           // console.log("Menu clicked+++++", page);
                         } else {
                           handleBack(); // Only navigate back if not on the home page
@@ -150,7 +164,7 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                       }}
                     >
                       <Typography sx={{ textAlign: "center" }}>
-                        {page}
+                        {route.name}
                       </Typography>
                     </MenuItem>
                   ))}
@@ -182,13 +196,13 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
               TRAVEL MINGLE
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {pages.map((route) => (
                 <Button
-                  key={page}
+                  key={route.path}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  {page}
+                  {route.name}
                 </Button>
               ))}
             </Box>
@@ -214,13 +228,13 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
+                {settings.map((route) => (
                   <MenuItem
-                    key={setting}
-                    onClick={() => handleUserMenuClicks(setting)}
+                    key={route.path}
+                    onClick={() => handleUserMenuClicks(route.name)}
                   >
                     <Typography sx={{ textAlign: "center" }}>
-                      {setting}
+                      {route.name}
                     </Typography>
                   </MenuItem>
                 ))}

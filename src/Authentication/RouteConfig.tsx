@@ -8,41 +8,69 @@ import Products from "../pages/menu/Products";
 import Account from "../pages/settings/Account";
 import Profile from "../pages/settings/Profile";
 import { ROUTES } from "../router/Routs";
+import { COMMON_ROLES } from "./RoleAccess";
 
 // Define the RouteConfig interface
 interface RouteConfig {
   path: string;
   element: React.ReactElement;
   roles: string[]; // Define roles as an array of strings
+  name: string;
+  category?: "page" | "setting"; // New category field to separate pages and settings
 }
 
 export const routeConfig: RouteConfig[] = [
-  { path: ROUTES.WELCOME, element: <Welcome />, roles: [] }, // Public
-  { path: ROUTES.HOME, element: <Home />, roles: ["SERVICE_PROVIDER", "USER"] },
+  {
+    path: ROUTES.WELCOME,
+    element: <Welcome />,
+    roles: COMMON_ROLES.PUBLIC,
+    name: "Welcome",
+  }, // Public
+  {
+    path: ROUTES.HOME,
+    element: <Home />,
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "Home",
+  },
   {
     path: ROUTES.DETAILS,
     element: <CardDetails />,
-    roles: ["SERVICE_PROVIDER", "USER"],
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "Details",
   },
   {
     path: ROUTES.DASHBOARD,
     element: <DashBoard />,
-    roles: ["serviceProvider"],
+    roles: COMMON_ROLES.SERVICE_ONLY,
+    name: "Dashboard",
+    category: "setting",
   },
   {
     path: ROUTES.ACCOUNT,
     element: <Account />,
-    roles: ["SERVICE_PROVIDER", "USER"],
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "Account",
+    category: "setting",
   },
   {
     path: ROUTES.PROFILE,
     element: <Profile />,
-    roles: ["SERVICE_PROVIDER", "USER"],
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "Profile",
+    category: "setting",
   },
   {
     path: ROUTES.PRODUCTS,
     element: <Products />,
-    roles: ["SERVICE_PROVIDER"],
+    roles: COMMON_ROLES.SERVICE_ONLY,
+    name: "Products",
+    category: "page",
   },
-  { path: ROUTES.ABOUT, element: <About />, roles: [] }, // Public
+  {
+    path: ROUTES.ABOUT,
+    element: <About />,
+    roles: COMMON_ROLES.PUBLIC,
+    name: "About",
+    category: "page",
+  }, // Public
 ];
