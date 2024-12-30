@@ -6,7 +6,7 @@ import NavBar from "../../Components/NavBar";
 import {
   GetServicesRequest,
   GetServicesResponse,
-} from "../../Components/Interfaces/ServiceInterface";
+} from "../../Interfaces/ServiceInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { transformToCardData } from "../../utils/CommonMethods";
 import Card from "../../Components/Card";

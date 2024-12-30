@@ -18,7 +18,7 @@ interface CardProps {
   title: string;
   description: string;
   price: string;
-  id: string;
+  id: number;
   handleClick: () => void;
 }
 

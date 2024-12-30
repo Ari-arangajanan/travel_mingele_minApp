@@ -4,42 +4,22 @@ import NavBar from "../../Components/NavBar";
 import Card from "../../Components/Card";
 import CategoryBAr from "../../Components/CategoryBAr";
 import { useNavigate } from "react-router-dom";
-import { GetCategoryRes } from "../../Components/Interfaces/CategoryInterface";
+import { GetCategoryRes } from "../../Interfaces/CategoryInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import {
   GetServicesRequest,
   GetServicesResponse,
-} from "../../Components/Interfaces/ServiceInterface";
+} from "../../Interfaces/ServiceInterface";
 import { transformToCardData } from "../../utils/CommonMethods";
-
-// const cardData = [
-//   {
-//     imageUrl: "https://via.placeholder.com/128",
-//     title: "Premium License",
-//     description: "High resolution 3840x2160 • PNG",
-//     price: "$49.00",
-//     id: "1001234",
-//   },
-//   {
-//     imageUrl: "https://via.placeholder.com/128",
-//     title: "Standard License",
-//     description: "Full resolution 1920x1080 • JPEG",
-//     price: "$19.00",
-//     id: "1001235",
-//   },
-//   {
-//     imageUrl: "https://via.placeholder.com/128",
-//     title: "Basic License",
-//     description: "Low resolution 1280x720 • JPEG",
-//     price: "$9.00",
-//     id: "1001236",
-//   },
-// ];
+import {
+  GetServicesCardRequest,
+  GetServicesCardResponse,
+} from "../../Interfaces/CardDetailsInterface";
 
 const Home: React.FC = () => {
   const [categoryData, setCategoryData] = useState<GetCategoryRes | null>(null);
   const [serviceDataData, setServiceDataData] =
-    useState<GetServicesResponse | null>(null);
+    useState<GetServicesCardResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -78,9 +58,15 @@ const Home: React.FC = () => {
     fetchCategoryData();
   }, []);
 
-  const handleSeeMore = (id: string) => {
-    navigate(`/details/${id}`);
+  const handleSeeMore = (id: number) => {
+    navigate(`/details/${id}`, {
+      state: { cardData: serviceDataData?.content.find((x) => x.id === id) },
+    });
     console.log(`see more clicked for ID: ${id}`);
+    console.log(
+      "serviceDataData",
+      serviceDataData?.content.filter((x) => x.id === id)
+    );
   };
 
   const handleBack = () => {
@@ -102,7 +88,7 @@ const Home: React.FC = () => {
     console.log(`Selected category: ${categoryId}`);
     setLoading(true);
     try {
-      const params: GetServicesRequest = {
+      const params: GetServicesCardRequest = {
         categoryId,
         telegramId: 0,
         page,
@@ -123,17 +109,6 @@ const Home: React.FC = () => {
       }
     } catch (err: any) {}
   };
-
-  // // transform data tpo convert to card data
-  // const transformToCardData = (services: GetServicesResponse["content"]) => {
-  //   return services.map((service) => ({
-  //     imageUrl: "https://via.placeholder.com/128", // Placeholder for now; replace with actual image URL if available
-  //     title: service.serviceName, // Map service name to title
-  //     description: `${service.description} • Price: $${service.basePrice}`, // Combine description and price
-  //     price: `$${service.basePrice.toFixed(2)}`, // Format price with two decimals
-  //     id: service.id.toString(), // Convert numeric ID to string
-  //   }));
-  // };
 
   const cardData = transformToCardData(serviceDataData?.content || []);
 

@@ -1,15 +1,19 @@
 import {
+  GetServicesCardRequest,
+  GetServicesCardResponse,
+} from "../../Interfaces/CardDetailsInterface";
+import {
   GetCategoryReq,
   GetCategoryRes,
-} from "../../Components/Interfaces/CategoryInterface";
+} from "../../Interfaces/CategoryInterface";
 import {
   GetServicesRequest,
   GetServicesResponse,
-} from "../../Components/Interfaces/ServiceInterface";
+} from "../../Interfaces/ServiceInterface";
 import {
   TelegramIdRequest,
   TokenResponse,
-} from "../../Components/Interfaces/TokenInterface";
+} from "../../Interfaces/TokenInterface";
 import ApiCalls from "./ApiCalls";
 
 const UseNetworkCalls = () => {
@@ -46,13 +50,13 @@ const UseNetworkCalls = () => {
   };
 
   const getService = (
-    params: GetServicesRequest
-  ): Promise<GetServicesResponse> => {
+    params: GetServicesCardRequest
+  ): Promise<GetServicesCardResponse> => {
     // Use the params object directly to construct the payload
     const payload: Record<string, any> = {
       ...params,
     };
-    return ApiCalls<GetServicesResponse>({
+    return ApiCalls<GetServicesCardResponse>({
       endpoint: "app/user/service/getServices",
       method: "POST",
       data: payload,

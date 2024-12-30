@@ -12,7 +12,7 @@ interface Service {
     title: string;
     description: string;
     price: string;
-    id: string;
+    id: number;
   }
   
   export const transformToCardData = (services: Service[]): CardData[] => {
@@ -21,7 +21,7 @@ interface Service {
       title: service.serviceName, // Map service name to title
       description: `${service.description} • Price: $${service.basePrice}`, // Combine description and price
       price: `$${service.basePrice.toFixed(2)}`, // Format price with two decimals
-      id: service.id.toString(), // Convert numeric ID to string
+      id: service.id, // Convert numeric ID to string
     }));
   };
 

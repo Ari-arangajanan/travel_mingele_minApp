@@ -3,7 +3,7 @@ import React, { Fragment, useState } from "react";
 import NavBar from "../../Components/NavBar";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
-import { GetServicesResponse } from "../../Components/Interfaces/ServiceInterface";
+import { GetServicesResponse } from "../../Interfaces/ServiceInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { transformToCardData } from "../../utils/CommonMethods";
 import Card from "../../Components/Card";
