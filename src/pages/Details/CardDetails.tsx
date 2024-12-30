@@ -176,7 +176,7 @@ const CardDetails = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
-                  sx={{ marginTop: "10px" }}
+                  sx={{ marginTop: "10px", backgroundColor: "rgb(25, 23, 37)" }}
                   onClick={() => handleBooking(type.id)}
                 >
                   Book Now

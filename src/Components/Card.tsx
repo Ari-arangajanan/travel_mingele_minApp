@@ -55,9 +55,6 @@ const Card: React.FC<CardProps> = ({
               <Typography variant="body2" gutterBottom>
                 {description}
               </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                ID: {id}
-              </Typography>
             </Grid>
             <Grid item>
               <Button
