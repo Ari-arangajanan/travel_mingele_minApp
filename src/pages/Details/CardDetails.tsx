@@ -9,27 +9,51 @@ import {
   AccordionDetails,
   Grid,
 } from "@mui/material";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import NavBar from "../../Components/NavBar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
 import { GetServicesCardResponse } from "../../Interfaces/CardDetailsInterface";
 import { useLocation } from "react-router-dom";
+import DateTimePickerComponent from "../../Components/DateTimePickerComponent";
+import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
+import { CreateBookingRequest } from "../../Interfaces/BookingInterface";
 
 const CardDetails = () => {
   const { navigateTo } = NavigationUtils();
   const location = useLocation();
   const cardData = location.state
     ?.cardData as GetServicesCardResponse["content"][0];
+
+  const [bookingDateFrom, setBookingDateFrom] = useState<Date | null>(null);
+  const [bookingDateTo, setBookingDateTo] = useState<Date | null>(null);
+
+  const { submitBooking } = UseNetworkCalls();
+
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
     console.log("Navigating back to Home");
   };
 
-  const handleBooking = (serviceTypeId: number) => {
-    console.log(`Booking Service Type ID: ${serviceTypeId}`);
-    alert("Booking Service Type ID: " + serviceTypeId);
+  const handleBooking = async (serviceTypeId: number) => {
+    if (!bookingDateFrom || !bookingDateTo) {
+      alert("Please select both booking start and end dates.");
+      return;
+    }
+    try {
+      const submitBookingReq: CreateBookingRequest = {
+        serviceTypeId,
+        bookingDateFrom: bookingDateFrom.toISOString(),
+        bookingDateTo: bookingDateTo.toISOString(),
+        status: "PENDING",
+      };
+      const responce = await submitBooking(submitBookingReq);
+      alert(responce.message);
+      navigateTo(ROUTES.DASHBOARD);
+    } catch (error: any) {
+      alert("Error Occurred");
+    }
   };
 
   if (!cardData) {
@@ -171,12 +195,39 @@ const CardDetails = () => {
                   </AccordionDetails>
                 </Accordion>
 
+                <Box
+                  sx={{
+                    marginTop: "10px",
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "10px",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* Date Pickers */}
+                  <DateTimePickerComponent
+                    label="Booking Start"
+                    value={bookingDateFrom}
+                    onChange={setBookingDateFrom}
+                    height="50px"
+                  />
+                  <DateTimePickerComponent
+                    label="Booking End"
+                    value={bookingDateTo}
+                    onChange={setBookingDateTo}
+                    height="50px"
+                  />
+                </Box>
                 {/* Booking Button */}
                 <Button
                   variant="contained"
                   color="primary"
                   fullWidth
-                  sx={{ marginTop: "10px", backgroundColor: "rgb(25, 23, 37)" }}
+                  sx={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    backgroundColor: "rgb(25, 23, 37)",
+                  }}
                   onClick={() => handleBooking(type.id)}
                 >
                   Book Now

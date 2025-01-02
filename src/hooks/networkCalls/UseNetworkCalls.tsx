@@ -1,4 +1,10 @@
 import {
+  CreateBookingRequest,
+  CreateBookingResponse,
+  GetAllBookingsRequest,
+  GetAllBookingsResponse,
+} from "../../Interfaces/BookingInterface";
+import {
   GetServicesCardRequest,
   GetServicesCardResponse,
 } from "../../Interfaces/CardDetailsInterface";
@@ -6,10 +12,6 @@ import {
   GetCategoryReq,
   GetCategoryRes,
 } from "../../Interfaces/CategoryInterface";
-import {
-  GetServicesRequest,
-  GetServicesResponse,
-} from "../../Interfaces/ServiceInterface";
 import {
   TelegramIdRequest,
   TokenResponse,
@@ -66,7 +68,47 @@ const UseNetworkCalls = () => {
     });
   };
 
-  return { getServiceCategory, login, getService };
+  const submitBooking = (
+    params: CreateBookingRequest
+  ): Promise<CreateBookingResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<CreateBookingResponse>({
+      endpoint: "app/user/bookings/submitBooking",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const getAllMyServices = (
+    params: GetAllBookingsRequest
+  ): Promise<GetAllBookingsResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<GetAllBookingsResponse>({
+      endpoint: "app/user/bookings/getAllMyServices",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  return {
+    getServiceCategory,
+    login,
+    getService,
+    submitBooking,
+    getAllMyServices,
+  };
 };
 
 export default UseNetworkCalls;
