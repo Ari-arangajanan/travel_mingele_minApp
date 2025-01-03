@@ -32,24 +32,28 @@ export interface CreateBookingResponse {
       service_id: number; // ID of the service type
       serviceProvider_id: number; // ID of the service provider
       user_id: number; // ID of the user who made the booking
+      service_name: string; // Name of the service
+      service_provider_name: string; // Name of the service provider
+      user_name: string; // Name of the user who made the booking
     };
     success: boolean; // Indicates if the operation was successful
   }
+  export interface Booking {
+    id: number;               // Unique identifier for the booking
+    status: number;           // Status of the booking (e.g., active, pending, etc.)
+    createdAt: string;        // Timestamp when the booking was created (ISO 8601 format)
+    updatedAt?: string | null; // Optional: Timestamp when the booking was last updated
+    bookingDateFrom: string;  // Start date and time of the booking (ISO 8601 format)
+    bookingDateTo: string;    // End date and time of the booking (ISO 8601 format)
+    price: number;            // Price of the booking
+    rejectReason?: string | null; // Optional: Reason for rejection, if applicable
+    service_id: number;       // ID of the associated service
+    serviceProvider_id: number; // ID of the service provider
+    user_id: number;          // ID of the user who made the booking
+  }
 
   export interface GetAllBookingsResponse {
-    content: Array<{
-      id: number; // Unique identifier for the booking
-      status: number; // Status of the booking (e.g., active, pending, etc.)
-      createdAt: string; // Timestamp when the booking was created
-      updatedAt: string | null; // Timestamp when the booking was last updated
-      bookingDateFrom: string; // Start date and time of the booking (ISO 8601 format)
-      bookingDateTo: string; // End date and time of the booking (ISO 8601 format)
-      price: number; // Price of the booking
-      rejectReason: string | null; // Reason for rejection, if applicable
-      service_id: number; // ID of the associated service
-      serviceProvider_id: number; // ID of the service provider
-      user_id: number; // ID of the user who made the booking
-    }>;
+    content: Array<Booking>; // List of bookings
     pageable: {
       pageNumber: number; // Current page number
       pageSize: number; // Number of items per page
