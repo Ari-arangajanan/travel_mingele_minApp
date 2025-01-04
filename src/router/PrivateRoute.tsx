@@ -8,15 +8,6 @@ interface PrivateRouteProps {
   allowedRoles: string[]; // Roles allowed to access the route
 }
 
-// Define a custom JWT payload type
-interface CustomJwtPayload {
-  userType: string;
-  telegramId: number;
-  sub: string;
-  iat: number;
-  exp: number;
-}
-
 const PrivateRoute: React.FC<PrivateRouteProps> = ({
   element,
   allowedRoles,

@@ -2,13 +2,15 @@ import React from "react";
 import Home from "../pages/home/Home";
 import CardDetails from "../pages/Details/CardDetails";
 import Welcome from "../pages/welcome/WelCome";
-import DashBoard from "../pages/settings/DashBoard";
+import DashBoard from "../business/DashBoard";
 import About from "../pages/menu/About";
 import Products from "../pages/menu/Products";
 import Account from "../pages/settings/Account";
 import Profile from "../pages/settings/Profile";
-import { ROUTES } from "../router/Routs";
-import { COMMON_ROLES } from "./RoleAccess";
+import { ROUTES } from "./Routs";
+import { COMMON_ROLES } from "../Authentication/RoleAccess";
+import MyHires from "../business/MyHires";
+import MyClients from "../business/MyClients";
 
 // Define the RouteConfig interface
 interface RouteConfig {
@@ -41,8 +43,22 @@ export const routeConfig: RouteConfig[] = [
   {
     path: ROUTES.DASHBOARD,
     element: <DashBoard />,
-    roles: COMMON_ROLES.SERVICE_ONLY,
+    roles: COMMON_ROLES.AUTHENTICATED,
     name: "Dashboard",
+    category: "setting",
+  },
+  {
+    path: ROUTES.MYHIRES,
+    element: <MyHires />,
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "My Hires",
+    category: "setting",
+  },
+  {
+    path: ROUTES.MYCLIENT,
+    element: <MyClients />,
+    roles: COMMON_ROLES.SERVICE_ONLY,
+    name: "My Clients",
     category: "setting",
   },
   {

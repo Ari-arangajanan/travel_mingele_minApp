@@ -15,6 +15,8 @@ import {
   GetServicesCardRequest,
   GetServicesCardResponse,
 } from "../../Interfaces/CardDetailsInterface";
+import { NavigationUtils } from "../../utils/NavigationUtils";
+import { ROUTES } from "../../router/Routs";
 
 const Home: React.FC = () => {
   const [categoryData, setCategoryData] = useState<GetCategoryRes | null>(null);
@@ -29,6 +31,7 @@ const Home: React.FC = () => {
   const [filters, setFilters] = useState<{ [key: string]: any }>({
     userName: "",
   });
+  const { navigateTo } = NavigationUtils();
   const [open, setOpen] = useState(false);
   const { getServiceCategory, getService } = UseNetworkCalls();
 
@@ -59,9 +62,12 @@ const Home: React.FC = () => {
   }, []);
 
   const handleSeeMore = (id: number) => {
-    navigate(`/details/${id}`, {
-      state: { cardData: serviceDataData?.content.find((x) => x.id === id) },
-    });
+    // Find the relevant card data
+    const cardData = serviceDataData?.content.find((x) => x.id === id);
+    navigateTo(ROUTES.DETAILS, { id }, { cardData });
+    // navigate(`/details/${id}`, {
+    //   state: { cardData: serviceDataData?.content.find((x) => x.id === id) },
+    // });
     console.log(`see more clicked for ID: ${id}`);
     console.log(
       "serviceDataData",
@@ -156,7 +162,7 @@ const Home: React.FC = () => {
         <Box sx={{ marginTop: 2 }}>
           <TablePagination
             component="div"
-            count={cardData.length} // Total records
+            count={totalRecords} // Total records
             page={page} // Current page index
             onPageChange={handlePageChange} // Handle page change
             rowsPerPage={rowsPerPage} // Records per page

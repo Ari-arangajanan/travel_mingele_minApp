@@ -50,7 +50,7 @@ const CardDetails = () => {
       };
       const responce = await submitBooking(submitBookingReq);
       alert(responce.message);
-      navigateTo(ROUTES.DASHBOARD);
+      navigateTo(ROUTES.MYHIRES);
     } catch (error: any) {
       alert("Error Occurred");
     }

@@ -6,13 +6,21 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import { title } from "process";
 import React from "react";
 
 interface ButtonConfig {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+
+  color?:
+    | "primary"
+    | "secondary"
+    | "inherit"
+    | "success"
+    | "error"
+    | "info"
+    | "warning";
   visible?: boolean;
 }
 
@@ -58,6 +66,7 @@ const DetailModel: React.FC<BookingDetailModalProps> = ({
               onClick={button.onClick}
               disabled={button.disabled}
               variant="contained"
+              color={button.color}
             >
               {button.label}
             </Button>

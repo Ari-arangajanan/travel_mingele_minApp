@@ -19,7 +19,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ROUTES } from "../router/Routs";
 import { NavigationUtils } from "../utils/NavigationUtils";
 import { getUserDetail } from "../utils/CommonMethods";
-import { routeConfig } from "../Authentication/RouteConfig";
+import { routeConfig } from "../router/RouteConfig";
+import { el } from "date-fns/locale";
 
 interface Props {
   handleBack: () => void;
@@ -90,8 +91,12 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
       console.log("Profile clicked", name);
     } else if (name === "Account") {
       navigateTo(ROUTES.ACCOUNT, { name });
+    } else if (name === "My Hires") {
+      navigateTo(ROUTES.MYHIRES, { name });
     } else if (name === "Dashboard") {
       navigateTo(ROUTES.DASHBOARD, { name });
+    } else if (name === "My Clients") {
+      navigateTo(ROUTES.MYCLIENT, { name });
     }
   };
 

@@ -80,3 +80,5 @@ export interface CreateBookingResponse {
     numberOfElements: number; // Number of elements on the current page
     empty: boolean; // Whether the content is empty
   }
+
+  

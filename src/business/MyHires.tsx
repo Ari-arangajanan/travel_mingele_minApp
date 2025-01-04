@@ -1,27 +1,18 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  TablePagination,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, TablePagination } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
-import NavBar from "../../Components/NavBar";
-import { NavigationUtils } from "../../utils/NavigationUtils";
-import { ROUTES } from "../../router/Routs";
-import { GetServicesResponse } from "../../Interfaces/ServiceInterface";
-import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
-import { transformToCardData } from "../../utils/CommonMethods";
-import Card from "../../Components/Card";
+import NavBar from "../Components/NavBar";
+import { NavigationUtils } from "../utils/NavigationUtils";
+import { ROUTES } from "../router/Routs";
+import UseNetworkCalls from "../hooks/networkCalls/UseNetworkCalls";
 import {
   Booking,
   GetAllBookingsRequest,
   GetAllBookingsResponse,
-} from "../../Interfaces/BookingInterface";
-import BookingListItem from "../../Components/BookingListItem";
-import DetailModel from "../../Components/DetailModel";
+} from "../Interfaces/BookingInterface";
+import BookingListItem from "../Components/BookingListItem";
+import DetailModel from "../Components/DetailModel";
 
-const DashBoard = () => {
+const MyHires = () => {
   const { navigateTo } = NavigationUtils();
   const { getAllMyServices } = UseNetworkCalls();
 
@@ -75,12 +66,6 @@ const DashBoard = () => {
     };
     fetchServiceData();
   }, [page, rowsPerPage, filters]);
-
-  const handleClick = (booking: Booking) => {
-    console.log("handleClick", booking);
-
-    // Logic for handling click on a booking
-  };
 
   const handlePageChange = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -158,7 +143,7 @@ const DashBoard = () => {
       >
         <TablePagination
           component="div"
-          count={serviceDataData?.content.length ?? 0} // Total records
+          count={totalRecords} // Total records
           page={page} // Current page index
           onPageChange={handlePageChange} // Handle page change
           rowsPerPage={rowsPerPage} // Records per page
@@ -170,4 +155,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default MyHires;

@@ -102,12 +102,30 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const getAllMyBookings = (
+    params: GetAllBookingsRequest
+  ): Promise<GetAllBookingsResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<GetAllBookingsResponse>({
+      endpoint: "app/serviceProvider/dashboard/getAllMyBookings",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
     getService,
     submitBooking,
     getAllMyServices,
+    getAllMyBookings,
   };
 };
 
