@@ -5,6 +5,7 @@ import { NavigationUtils } from "../utils/NavigationUtils";
 import UseNetworkCalls from "../hooks/networkCalls/UseNetworkCalls";
 import { ROUTES } from "../router/Routs";
 import {
+  ApproveBooking,
   Booking,
   GetAllBookingsRequest,
   GetAllBookingsResponse,
@@ -26,9 +27,19 @@ export interface ButtonConfig {
   visible?: boolean;
 }
 
+// interface ApproveBooking {
+//   bookingId: number;
+//   status: string;
+// }
+
+interface ApprovalResponse {
+  message: string;
+  bookingDateTo?: string; // Optional property
+}
+
 const MyClients = () => {
   const { navigateTo } = NavigationUtils();
-  const { getAllMyBookings } = UseNetworkCalls();
+  const { getAllMyBookings, approvals } = UseNetworkCalls();
 
   const [serviceDataData, setServiceDataData] =
     useState<GetAllBookingsResponse | null>(null);
@@ -105,20 +116,77 @@ const MyClients = () => {
     setModalOpen(true);
   };
 
+  const sendApprovalRequest = async (
+    bookingId: number,
+    status: "PENDING" | "ACCEPTED" | "REJECTED" | "COMPLETED"
+  ): Promise<ApprovalResponse | null> => {
+    const approveRequest: ApproveBooking = {
+      bookingId,
+      status,
+    };
+
+    try {
+      const response = await approvals(approveRequest);
+      return response;
+    } catch (error) {
+      console.error("Error in sending approval request:", error);
+      return null;
+    }
+  };
+
+  const handleApprove = async () => {
+    if (selectedBooking?.id === undefined) {
+      alert("Booking ID is undefined");
+      return;
+    }
+    const responce = sendApprovalRequest(selectedBooking.id, "ACCEPTED");
+    if (responce != null) {
+      alert(responce);
+    }
+  };
+
+  const handleReject = async () => {
+    if (selectedBooking?.id === undefined) {
+      alert("Booking ID is undefined");
+      return;
+    }
+    const responce = sendApprovalRequest(selectedBooking.id, "REJECTED");
+    if (responce != null) {
+      alert(responce);
+    }
+  };
+
+  const handleComplete = async () => {
+    if (selectedBooking?.id === undefined) {
+      alert("Booking ID is undefined");
+      return;
+    }
+    const responce = sendApprovalRequest(selectedBooking.id, "COMPLETED");
+    if (responce != null) {
+      alert(responce);
+    }
+  };
+
   // Define buttons dynamically based on booking status
   const buttons: ButtonConfig[] = selectedBooking
     ? [
         {
           label: "Approve",
-          onClick: () => alert("Approved"),
+          onClick: handleApprove,
           visible: selectedBooking.status === 1,
           color: "success", // ✅ Valid color
         },
         {
           label: "Reject",
-          onClick: () => alert("Rejected"),
+          onClick: handleReject,
           visible: selectedBooking.status === 1,
           color: "error", // ✅ Valid color
+        },
+        {
+          label: "Complete",
+          onClick: handleComplete,
+          visible: selectedBooking.status === 2,
+          color: "inherit", // ✅ Valid color
         },
         {
           label: "Close",

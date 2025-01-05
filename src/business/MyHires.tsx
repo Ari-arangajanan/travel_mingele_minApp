@@ -83,6 +83,7 @@ const MyHires = () => {
   const handleCardClick = (booking: Booking) => {
     setSelectedBooking(booking);
     setModalOpen(true);
+    console.log(booking);
   };
 
   const handleCloseModal = () => {
@@ -90,17 +91,26 @@ const MyHires = () => {
     setSelectedBooking(null);
   };
 
+  const handleApprove = () => {
+    alert("Approved: " + selectedBooking?.id);
+    console.log("Approved", selectedBooking);
+  };
+
+  const handleReject = () => {
+    alert("Rejected");
+  };
+
   // Define buttons dynamically based on booking status
   const buttons = selectedBooking
     ? [
         {
           label: "Approve",
-          onClick: () => alert("Approved"),
+          onClick: handleApprove,
           visible: selectedBooking.status === 0,
         },
         {
           label: "Reject",
-          onClick: () => alert("Rejected"),
+          onClick: handleReject,
           visible: selectedBooking.status === 4,
         },
         {

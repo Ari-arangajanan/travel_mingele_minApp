@@ -10,12 +10,13 @@ import {
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { transformToCardData } from "../../utils/CommonMethods";
 import Card from "../../Components/Card";
+import { GetServicesCardResponse } from "../../Interfaces/CardDetailsInterface";
 
 const Products = () => {
   const teleUser = window.Telegram?.WebApp;
 
   const [serviceDataData, setServiceDataData] =
-    useState<GetServicesResponse | null>(null);
+    useState<GetServicesCardResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -71,7 +72,7 @@ const Products = () => {
     setPage(0); // Reset to the first page
   };
 
-  const handleSeeMore = (id: string) => {
+  const handleSeeMore = (id: number) => {
     alert(`card clicker ${id}`);
   };
   return (
@@ -94,7 +95,7 @@ const Products = () => {
       </Box>
 
       {/* <Button children="Button" onClick={() => console.log("clocked")} /> */}
-      <Box sx={{ marginTop: 1, padding: 2 }}>
+      <Box sx={{ marginTop: 10, padding: 2 }}>
         <div className="app-container">
           {cardData.map((card, index) => (
             <div key={index} className="card-box">
@@ -114,7 +115,7 @@ const Products = () => {
       <Box sx={{ marginTop: 2 }}>
         <TablePagination
           component="div"
-          count={cardData.length} // Total records
+          count={totalRecords} // Total records
           page={page} // Current page index
           onPageChange={handlePageChange} // Handle page change
           rowsPerPage={rowsPerPage} // Records per page

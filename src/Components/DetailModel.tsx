@@ -10,7 +10,7 @@ import React from "react";
 
 interface ButtonConfig {
   label: string;
-  onClick: () => void;
+  onClick: (id: number) => void;
   disabled?: boolean;
 
   color?:
@@ -63,7 +63,7 @@ const DetailModel: React.FC<BookingDetailModalProps> = ({
           .map((button, index) => (
             <Button
               key={index}
-              onClick={button.onClick}
+              onClick={() => booking && button.onClick(booking.id)}
               disabled={button.disabled}
               variant="contained"
               color={button.color}

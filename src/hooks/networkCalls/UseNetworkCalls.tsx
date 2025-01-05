@@ -1,4 +1,7 @@
 import {
+  ApproveBooking,
+  Booking,
+  BookingStatusUpdateResponse,
   CreateBookingRequest,
   CreateBookingResponse,
   GetAllBookingsRequest,
@@ -119,6 +122,23 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const approvals = (
+    params: ApproveBooking
+  ): Promise<BookingStatusUpdateResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<BookingStatusUpdateResponse>({
+      endpoint: "app/serviceProvider/dashboard/bookingAcceptance",
+      method: "PUT",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -126,6 +146,7 @@ const UseNetworkCalls = () => {
     submitBooking,
     getAllMyServices,
     getAllMyBookings,
+    approvals,
   };
 };
 

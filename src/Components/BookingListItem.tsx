@@ -7,15 +7,11 @@ import {
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import React from "react";
+import { Booking } from "../Interfaces/BookingInterface";
 
 interface BookingListItemProps {
-  booking: {
-    id: number;
-    price: number;
-    bookingDateFrom: string;
-    bookingDateTo: string;
-  };
-  onClick: (booking: any) => void;
+  booking: Booking;
+  onClick: (booking: Booking) => void;
 }
 
 const BookingListItem: React.FC<BookingListItemProps> = ({

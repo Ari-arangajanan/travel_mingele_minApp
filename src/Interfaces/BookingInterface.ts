@@ -18,6 +18,11 @@ export interface CreateBookingRequest {
     bookingId: number; // Specific booking ID
   }
 
+export interface ApproveBooking {
+  bookingId: number;
+  status: "PENDING"| "ACCEPTED"| "REJECTED" |"COMPLETED"
+}
+
 export interface CreateBookingResponse {
     message: string; // Success or informational message
     data: {
@@ -38,7 +43,7 @@ export interface CreateBookingResponse {
     };
     success: boolean; // Indicates if the operation was successful
   }
-  export interface Booking {
+export interface Booking {
     id: number;               // Unique identifier for the booking
     status: number;           // Status of the booking (e.g., active, pending, etc.)
     createdAt: string;        // Timestamp when the booking was created (ISO 8601 format)
@@ -50,6 +55,9 @@ export interface CreateBookingResponse {
     service_id: number;       // ID of the associated service
     serviceProvider_id: number; // ID of the service provider
     user_id: number;          // ID of the user who made the booking
+    service_name: string;
+    service_provider_name: string;
+    user_name: string;
   }
 
   export interface GetAllBookingsResponse {
@@ -81,4 +89,8 @@ export interface CreateBookingResponse {
     empty: boolean; // Whether the content is empty
   }
 
-  
+  export interface BookingStatusUpdateResponse {
+    message: string; // Success or informational message
+    data: Booking; // The booking details
+    success: boolean; // Indicates if the operation was successful
+  }
