@@ -5,6 +5,7 @@ import { NavigationUtils } from "../utils/NavigationUtils";
 import { ROUTES } from "../router/Routs";
 import UseNetworkCalls from "../hooks/networkCalls/UseNetworkCalls";
 import {
+  ApproveBooking,
   Booking,
   GetAllBookingsRequest,
   GetAllBookingsResponse,
@@ -12,6 +13,24 @@ import {
 import BookingListItem from "../Components/BookingListItem";
 import DetailModel from "../Components/DetailModel";
 
+interface ApprovalResponse {
+  message: string;
+  bookingDateTo?: string; // Optional property
+}
+
+export interface ButtonConfig {
+  label: string;
+  onClick: () => void;
+  color?:
+    | "success"
+    | "error"
+    | "warning"
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "info";
+  visible?: boolean;
+}
 const MyHires = () => {
   const { navigateTo } = NavigationUtils();
   const { getAllMyServices } = UseNetworkCalls();
@@ -27,6 +46,7 @@ const MyHires = () => {
 
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { approvals } = UseNetworkCalls();
 
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
@@ -91,27 +111,53 @@ const MyHires = () => {
     setSelectedBooking(null);
   };
 
-  const handleApprove = () => {
-    alert("Approved: " + selectedBooking?.id);
-    console.log("Approved", selectedBooking);
+  const sendApprovalRequest = async (
+    bookingId: number,
+    status: "PENDING" | "ACCEPTED" | "REJECTED" | "COMPLETED" | "CANCELLED"
+  ): Promise<ApprovalResponse | null> => {
+    const approveRequest: ApproveBooking = {
+      bookingId,
+      status,
+    };
+
+    try {
+      const response = await approvals(approveRequest);
+      return response;
+    } catch (error) {
+      console.error("Error in sending request:", error);
+      return null;
+    }
   };
 
-  const handleReject = () => {
-    alert("Rejected");
+  const handlePay = () => {
+    alert("Pay: " + selectedBooking?.id);
+    console.log("Pay", selectedBooking);
+  };
+
+  const handleCancel = () => {
+    alert("Cancelled: " + selectedBooking?.id);
+    if (selectedBooking?.id === undefined) {
+      alert("Booking ID is undefined");
+      return;
+    }
+    const responce = sendApprovalRequest(selectedBooking.id, "CANCELLED");
+    if (responce != null) {
+      alert(responce);
+    }
   };
 
   // Define buttons dynamically based on booking status
   const buttons = selectedBooking
     ? [
         {
-          label: "Approve",
-          onClick: handleApprove,
-          visible: selectedBooking.status === 0,
+          label: "Pay",
+          onClick: handlePay,
+          visible: selectedBooking.status === 4,
         },
         {
-          label: "Reject",
-          onClick: handleReject,
-          visible: selectedBooking.status === 4,
+          label: "Cancel",
+          onClick: handleCancel,
+          visible: selectedBooking.status === 1,
         },
         {
           label: "Close",

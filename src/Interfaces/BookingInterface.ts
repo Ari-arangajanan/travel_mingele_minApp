@@ -20,7 +20,7 @@ export interface CreateBookingRequest {
 
 export interface ApproveBooking {
   bookingId: number;
-  status: "PENDING"| "ACCEPTED"| "REJECTED" |"COMPLETED"
+  status: "PENDING"| "ACCEPTED"| "REJECTED" |"COMPLETED" | "CANCELLED";
 }
 
 export interface CreateBookingResponse {
