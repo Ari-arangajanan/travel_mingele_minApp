@@ -45,8 +45,10 @@ const MyHires = () => {
   const [filters, setFilters] = useState<{ [key: string]: any }>({});
 
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [selectPayment, setSelectPayment] = useState<Booking | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const { approvals } = UseNetworkCalls();
+  const [payOpen, setPayOpen] = useState(false);
+  const { approvals, pay } = UseNetworkCalls();
 
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
@@ -111,6 +113,11 @@ const MyHires = () => {
     setSelectedBooking(null);
   };
 
+  const handleClosePay = () => {
+    setPayOpen(false);
+    setSelectPayment(null);
+  };
+
   const sendApprovalRequest = async (
     bookingId: number,
     status: "PENDING" | "ACCEPTED" | "REJECTED" | "COMPLETED" | "CANCELLED"
@@ -130,12 +137,18 @@ const MyHires = () => {
   };
 
   const handlePay = () => {
-    alert("Pay: " + selectedBooking?.id);
-    console.log("Pay", selectedBooking);
+    // setPayOpen(true);
+    // setSelectPayment(selectedBooking);
+    if (selectedBooking?.id !== undefined) {
+      navigateTo(`${ROUTES.PAYMENT}/${selectedBooking.orderId}`, {
+        state: JSON.stringify({ selectedBooking }),
+      });
+    } else {
+      alert("Booking ID is undefined");
+    }
   };
 
   const handleCancel = () => {
-    alert("Cancelled: " + selectedBooking?.id);
     if (selectedBooking?.id === undefined) {
       alert("Booking ID is undefined");
       return;
@@ -146,6 +159,47 @@ const MyHires = () => {
     }
   };
 
+  // pay payment
+  const handleCash = () => {
+    alert("Pay: " + selectedBooking?.id);
+    console.log("Pay", selectedBooking);
+  };
+
+  const handleBankPay = () => {
+    alert("Cancelled: " + selectedBooking?.id);
+  };
+
+  const handleCardPay = async () => {
+    if (selectedBooking && selectedBooking.id !== undefined) {
+      const paymentUrl = await payment(selectedBooking.id, "CARD");
+      if (paymentUrl) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = paymentUrl as string;
+        form.style.display = "none";
+        document.body.appendChild(form);
+        form.submit();
+      }
+    } else {
+      alert("Selected booking is null");
+    }
+  };
+
+  const payment = async (
+    bookingId: number,
+    paymentMethod: "CARD" | "BANK_TRANSFER" | "CASH"
+  ) => {
+    const payRequest = {
+      bookingId,
+      paymentMethod: paymentMethod,
+    };
+    try {
+      const response = await pay(payRequest);
+      return response;
+    } catch (error) {
+      return null;
+    }
+  };
   // Define buttons dynamically based on booking status
   const buttons = selectedBooking
     ? [

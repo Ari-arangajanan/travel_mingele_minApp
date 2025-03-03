@@ -1,13 +1,11 @@
-import React, { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { NavigationUtils } from "../utils/NavigationUtils";
-import UseNetworkCalls from "../hooks/networkCalls/UseNetworkCalls";
 import { ROUTES } from "../router/Routs";
 import { AppBar, Box } from "@mui/material";
 import NavBar from "../Components/NavBar";
 
 const DashBoard = () => {
   const { navigateTo } = NavigationUtils();
-  const { getAllMyServices } = UseNetworkCalls();
 
   const handleBack = () => {
     navigateTo(ROUTES.HOME);

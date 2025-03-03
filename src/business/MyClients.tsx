@@ -95,6 +95,7 @@ const MyClients = () => {
         console.log(serviceDataData);
 
         setTotalRecords(response.totalElements);
+        setLoading(false);
       } catch (error: any) {
         alert("error Occurred");
         navigateTo("/");
@@ -195,6 +196,9 @@ const MyClients = () => {
         },
       ]
     : [];
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <Fragment>

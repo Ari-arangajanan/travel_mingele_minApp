@@ -15,11 +15,16 @@ import {
   GetCategoryReq,
   GetCategoryRes,
 } from "../../Interfaces/CategoryInterface";
+import { PaymentRequest } from "../../Interfaces/Paymenty";
 import {
   TelegramIdRequest,
   TokenResponse,
 } from "../../Interfaces/TokenInterface";
 import ApiCalls from "./ApiCalls";
+import {
+  PaymentInvoiceRequest,
+  PaymentInvoiceResponse,
+} from "../../Interfaces/InvoiceInterface";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -139,6 +144,38 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const pay = (params: PaymentRequest): Promise<String> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<String>({
+      endpoint: "app/user/payment/pay",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const getInvoice = (
+    params: PaymentInvoiceRequest
+  ): Promise<PaymentInvoiceResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<PaymentInvoiceResponse>({
+      endpoint: "app/user/payment/getInvoice",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -147,6 +184,8 @@ const UseNetworkCalls = () => {
     getAllMyServices,
     getAllMyBookings,
     approvals,
+    pay,
+    getInvoice,
   };
 };
 

@@ -1,10 +1,10 @@
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Typography,
-  DialogActions,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
 } from "@mui/material";
 import React from "react";
 
@@ -24,7 +24,7 @@ interface ButtonConfig {
   visible?: boolean;
 }
 
-interface BookingDetailModalProps {
+interface PaymentDetailModel {
   open: boolean;
   booking: {
     id: number;
@@ -32,14 +32,13 @@ interface BookingDetailModalProps {
     bookingDateFrom: string;
     bookingDateTo: string;
     status: number;
+    orderId: string;
   } | null;
   buttons: ButtonConfig[];
   onClose: () => void;
   title: string;
 }
-
-// pop-up window for booking details
-const DetailModel: React.FC<BookingDetailModalProps> = ({
+const PaymentPopUpModel: React.FC<PaymentDetailModel> = ({
   open,
   booking,
   buttons,
@@ -58,6 +57,7 @@ const DetailModel: React.FC<BookingDetailModalProps> = ({
         <Typography>
           To: {new Date(booking?.bookingDateTo || "").toLocaleString()}
         </Typography>
+        <Typography>Order ID: {booking?.orderId}</Typography>
       </DialogContent>
       <DialogActions>
         {buttons
@@ -78,4 +78,4 @@ const DetailModel: React.FC<BookingDetailModalProps> = ({
   );
 };
 
-export default DetailModel;
+export default PaymentPopUpModel;

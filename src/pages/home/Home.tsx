@@ -108,6 +108,7 @@ const Home: React.FC = () => {
         console.log(serviceDataData);
 
         setTotalRecords(response.totalElements);
+        setLoading(false);
       } catch (error: any) {
         alert("error Occurred");
         navigate("/");
@@ -117,6 +118,9 @@ const Home: React.FC = () => {
   };
 
   const cardData = transformToCardData(serviceDataData?.content || []);
+
+  // if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <>

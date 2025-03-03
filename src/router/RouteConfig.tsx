@@ -11,6 +11,7 @@ import { ROUTES } from "./Routs";
 import { COMMON_ROLES } from "../Authentication/RoleAccess";
 import MyHires from "../business/MyHires";
 import MyClients from "../business/MyClients";
+import Payment from "../pages/payment/Payment";
 
 // Define the RouteConfig interface
 interface RouteConfig {
@@ -82,6 +83,14 @@ export const routeConfig: RouteConfig[] = [
     name: "Products",
     category: "page",
   },
+  {
+    path: `${ROUTES.PAYMENT}/:orderId`,
+    element: <Payment />,
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "payment",
+  },
+
+  // public Routes
   {
     path: ROUTES.ABOUT,
     element: <About />,

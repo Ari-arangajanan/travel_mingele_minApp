@@ -58,6 +58,7 @@ export interface Booking {
     service_name: string;
     service_provider_name: string;
     user_name: string;
+    orderId: string;
   }
 
   export interface GetAllBookingsResponse {
