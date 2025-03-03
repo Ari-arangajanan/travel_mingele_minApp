@@ -68,12 +68,12 @@ const Payment = () => {
 
   // pay payment
   const handleCash = () => {
-    alert("Pay: " + selectPayment?.id);
+    alert("Cash Pay: " + selectPayment?.id);
     console.log("Pay", selectPayment);
   };
 
   const handleBankPay = () => {
-    alert("Cancelled: " + selectPayment?.id);
+    alert("BankPay: " + selectPayment?.id);
   };
 
   const handleCardPay = async () => {
