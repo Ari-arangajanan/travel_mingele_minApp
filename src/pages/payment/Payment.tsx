@@ -3,17 +3,17 @@ import { AppBar, Box, Button, Grid, Paper, Typography } from "@mui/material";
 import NavBar from "../../Components/NavBar";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { PaymentInvoiceResponse } from "../../Interfaces/InvoiceInterface";
 import PaymentPopUpModel from "../../Components/PaymentPopUpModel";
 
 const Payment = () => {
-  const { navigateTo } = NavigationUtils();
+  const { navigateTo } = NavigationUtils(); // Navigation utility for navigating to different routes
   const { state } = useLocation(); // Extract payment details from navigation state
-  const { orderId } = useParams();
-  const { getInvoice, pay } = UseNetworkCalls();
+  const { orderId } = useParams(); // Extract order ID from URL params
+  const { getInvoice, pay, getPaySlip } = UseNetworkCalls();
 
   //handle data
   const [invoiceData, setInvoiceData] = useState<PaymentInvoiceResponse>();
@@ -24,6 +24,7 @@ const Payment = () => {
   const [payOpen, setPayOpen] = useState(false);
   const [selectPayment, setSelectPayment] =
     useState<PaymentInvoiceResponse | null>(null);
+  const [searchParams] = useSearchParams(); // Extract query params
 
   const handleBack = () => {
     navigateTo(ROUTES.MYHIRES);
@@ -31,18 +32,19 @@ const Payment = () => {
     console.log("handleBack");
   };
 
+  /**
+   * useEffect to fetch the invoice data when the orderId changes.
+   * This is triggered when the component mounts or when orderId/state changes.
+   */
   useEffect(() => {
     setLoading(true);
-    // Fetch payment details using orderId
-    console.log("orderId", orderId);
-    console.log("state", state);
     const fetchInvoice = async () => {
       try {
         if (!orderId) {
           throw new Error("Invalid orderId");
         }
         const response = await getInvoice({ orderId: orderId });
-        console.log("response", response);
+        console.log("invoice", response);
         setInvoiceData(response);
       } catch (error) {
         console.log("error", error);
@@ -53,14 +55,48 @@ const Payment = () => {
     fetchInvoice();
   }, [orderId, state]);
 
+  /**
+   * useEffect to capture PayHere callback and fetch updated payment details.
+   * Runs when searchParams (query parameters) or orderId changes.
+   */
+  useEffect(() => {
+    setLoading(true);
+    if (searchParams.has("paymentStatus") || searchParams.has("order_id")) {
+      const getPaySlipFunction = async () => {
+        try {
+          if (!searchParams.has("order_id")) {
+            throw new Error("Invalid orderId");
+          }
+          const order_id = searchParams.get("order_id");
+          alert("callback +++++ order_id: " + order_id);
+          console.log("orderId +++++++++", order_id);
+          const response = await getPaySlip({
+            orderId: order_id ?? "",
+          });
+
+          console.log("paySlip", response);
+          setInvoiceData(response);
+        } catch (error) {
+          console.log("error", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      getPaySlipFunction();
+    }
+  }, [searchParams, orderId]);
+
+  // Display loading screen if data is being fetched
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  // Display error message if any error occurs
   if (error) {
     return <div>Error: {error}</div>;
   }
 
+  // Close the payment popup
   const handleClosePay = () => {
     setPayOpen(false);
     setSelectPayment(null);
@@ -68,7 +104,7 @@ const Payment = () => {
 
   // pay payment
   const handleCash = () => {
-    alert("Cash Pay: " + selectPayment?.id);
+    alert("Cash Pay does not support now: " + selectPayment?.id);
     console.log("Pay", selectPayment);
   };
 
@@ -92,6 +128,7 @@ const Payment = () => {
     }
   };
 
+  // API call to process payment
   const payment = async (
     bookingId: number,
     paymentMethod: "CARD" | "BANK_TRANSFER" | "CASH"
@@ -108,11 +145,13 @@ const Payment = () => {
     }
   };
 
+  // Open the payment popup
   const payNow = () => {
     setPayOpen(true);
     setSelectPayment(invoiceData ? invoiceData : null);
   };
 
+  // Close the payment modal
   const handleCloseModal = () => {
     setPayOpen(false);
     setSelectPayment(null);
@@ -227,7 +266,6 @@ const Payment = () => {
               <Box
                 sx={{
                   mt: 1,
-                  backgroundColor: "#000",
                   color: "#fff",
                   px: 2,
                   py: 1,
@@ -235,7 +273,19 @@ const Payment = () => {
                   display: "inline-block",
                 }}
               >
-                <Typography fontWeight="bold">
+                <Typography
+                  fontWeight="bold"
+                  sx={{
+                    backgroundColor:
+                      invoiceData?.paymentStatus === 2 ? "green" : "red",
+                    color: "white", // Ensures text is readable
+                    padding: "10px", // Adds spacing inside the box
+                    borderRadius: "8px", // Rounded corners for better UI
+                    display: "inline-block", // Ensures the background wraps around the text
+                    textAlign: "right", // Centers text
+                    width: "100%", // Makes it occupy the full available width
+                  }}
+                >
                   Total →{" "}
                   {(invoiceData?.amount ?? 0) +
                     ((invoiceData?.amount ?? 0) * 3.3) / 100}
@@ -292,21 +342,23 @@ const Payment = () => {
           </Box>
 
           {/* Pay Now Button */}
-          <Box sx={{ mt: 3 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                backgroundColor: "#000",
-                color: "#fff",
-                fontSize: "16px",
-                py: 1.5,
-              }}
-              onClick={payNow}
-            >
-              Pay Now
-            </Button>
-          </Box>
+          {invoiceData?.paymentStatus !== 2 && (
+            <Box sx={{ mt: 3 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  backgroundColor: "#000",
+                  color: "#fff",
+                  fontSize: "16px",
+                  py: 1.5,
+                }}
+                onClick={payNow}
+              >
+                Pay Now
+              </Button>
+            </Box>
+          )}
           {/* // fixme: PaymentPopUpModel */}
           <PaymentPopUpModel
             open={payOpen}

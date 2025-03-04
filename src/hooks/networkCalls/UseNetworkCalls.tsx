@@ -176,6 +176,23 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const getPaySlip = (
+    params: PaymentInvoiceRequest
+  ): Promise<PaymentInvoiceResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<PaymentInvoiceResponse>({
+      endpoint: "app/user/payment/paySuccess",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -186,6 +203,7 @@ const UseNetworkCalls = () => {
     approvals,
     pay,
     getInvoice,
+    getPaySlip,
   };
 };
 
