@@ -1,6 +1,5 @@
 import {
   ApproveBooking,
-  Booking,
   BookingStatusUpdateResponse,
   CreateBookingRequest,
   CreateBookingResponse,
@@ -25,6 +24,8 @@ import {
   PaymentInvoiceRequest,
   PaymentInvoiceResponse,
 } from "../../Interfaces/InvoiceInterface";
+import { ServiceCategoryDropDownResponse } from "../../Interfaces/AddServiceInterface";
+import { ServiceRegisterRequest } from "../../Interfaces/RegisterService";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -193,6 +194,33 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const dropDownCategory = (): Promise<ServiceCategoryDropDownResponse> => {
+    return ApiCalls<ServiceCategoryDropDownResponse>({
+      endpoint: "app/user/category/getCategoriesForDropdown",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const registerServices = (
+    params: ServiceRegisterRequest
+  ): Promise<ServiceRegisterRequest> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<ServiceRegisterRequest>({
+      endpoint: "app/serviceProvider/serviceRegistration/registrations",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -204,6 +232,8 @@ const UseNetworkCalls = () => {
     pay,
     getInvoice,
     getPaySlip,
+    dropDownCategory,
+    registerServices,
   };
 };
 

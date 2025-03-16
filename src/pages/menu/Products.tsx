@@ -3,10 +3,7 @@ import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
 import { AppBar, Box, Button, TablePagination } from "@mui/material";
 import NavBar from "../../Components/NavBar";
-import {
-  GetServicesRequest,
-  GetServicesResponse,
-} from "../../Interfaces/ServiceInterface";
+import { GetServicesRequest } from "../../Interfaces/ServiceInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import { transformToCardData } from "../../utils/CommonMethods";
 import Card from "../../Components/Card";
@@ -57,8 +54,6 @@ const Products = () => {
 
   const handleBack = () => {
     navigateTo(ROUTES.HOME);
-    // Logic for back button (e.g., navigate back)
-    console.log("handleBack");
   };
 
   const handlePageChange = (event: unknown, newPage: number) => {
@@ -75,23 +70,32 @@ const Products = () => {
   const handleSeeMore = (id: number) => {
     alert(`card clicker ${id}`);
   };
+
+  const handleAddClick = () => {
+    navigateTo(ROUTES.ADD_SERVICE);
+  };
+
   return (
     <Fragment>
       <AppBar position="fixed">
-        <NavBar handleBack={handleBack} />
+        <NavBar handleBack={handleBack} heading="Product" />
       </AppBar>
       <Box
         position="fixed"
+        display="flex"
+        justifyContent="center"
+        width="100%"
         sx={{
-          position: "fixed",
-          top: "60px", // Adjust based on AppBar height (default is 64px for desktop)
+          top: "50px", // Adjust based on AppBar height (default is 64px for desktop)
           backgroundColor: "#f4f4f4", // Optional background color
           zIndex: 1,
-          // padding: 2,
+          padding: 1.5,
           width: "100%",
         }}
       >
-        <Button>Add</Button>
+        <Button variant="contained" onClick={handleAddClick}>
+          Add
+        </Button>
       </Box>
 
       {/* <Button children="Button" onClick={() => console.log("clocked")} /> */}

@@ -12,6 +12,7 @@ import { COMMON_ROLES } from "../Authentication/RoleAccess";
 import MyHires from "../business/MyHires";
 import MyClients from "../business/MyClients";
 import Payment from "../pages/payment/Payment";
+import AddServiceForm from "../pages/serviceRegister/AddServiceForm";
 
 // Define the RouteConfig interface
 interface RouteConfig {
@@ -88,6 +89,12 @@ export const routeConfig: RouteConfig[] = [
     element: <Payment />,
     roles: COMMON_ROLES.AUTHENTICATED,
     name: "payment",
+  },
+  {
+    path: `${ROUTES.ADD_SERVICE}`,
+    element: <AddServiceForm />,
+    roles: COMMON_ROLES.AUTHENTICATED,
+    name: "addService",
   },
 
   // public Routes

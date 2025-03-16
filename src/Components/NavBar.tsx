@@ -23,10 +23,11 @@ import { routeConfig } from "../router/RouteConfig";
 import { el } from "date-fns/locale";
 
 interface Props {
+  heading?: string;
   handleBack: () => void;
 }
 
-const NavBar: React.FC<Props> = ({ handleBack }) => {
+const NavBar: React.FC<Props> = ({ handleBack, heading }) => {
   const location = useLocation();
   const isHomePage = location.pathname === ROUTES.HOME;
   const { navigateTo } = NavigationUtils();
@@ -196,9 +197,10 @@ const NavBar: React.FC<Props> = ({ handleBack }) => {
                 letterSpacing: ".05rem",
                 color: "#ffffff",
                 textDecoration: "none",
+                alignItems: "center",
               }}
             >
-              TRAVEL MINGLE
+              {heading != null ? heading : "TRAVEL MINGLE"}
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((route) => (

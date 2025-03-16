@@ -10,6 +10,8 @@ export const ROUTES = {
     PRODUCTS:"/menu/products/:page",
     ABOUT:"/menu/about/:page",
     PAYMENT:`/menu/payment/:name`,
+    ADD_SERVICE:`/menu/products/addService`,
+    SERVICE_REGISTER:"/menu/serviceRegister/:name",
   };
   
   
