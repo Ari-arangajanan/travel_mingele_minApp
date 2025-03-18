@@ -22,6 +22,7 @@ import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
 import GoogleMapWithSearch from "../../Components/GoogleMapWithSearch";
+import ImageUpload from "../../Components/ImageUpload";
 
 const AddServiceForm: React.FC = () => {
   const [service, setService] = useState<AddServiceInterface>({
@@ -32,6 +33,7 @@ const AddServiceForm: React.FC = () => {
     longitude: -122.4194,
     categoryId: 1,
     serviceProviderId: 1,
+    imageUrl: "" as string,
     serviceTypeRegistrations: [],
   });
 
@@ -185,6 +187,24 @@ const AddServiceForm: React.FC = () => {
               value={service.basePrice}
               onChange={handleChange}
             />
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Typography>Upload Service Image</Typography>
+            <ImageUpload
+              onUploadSuccess={(imageUrl) => {
+                setService((prev) => ({ ...prev, imageUrl }));
+              }}
+            />
+            {/* {service.imageUrl && (
+              <Box sx={{ mt: 1 }}>
+                <img
+                  src={service.imageUrl}
+                  alt="Uploaded"
+                  width="150px"
+                  height="150px"
+                />
+              </Box>
+            )} */}
           </Box>
           <Box sx={{ mt: 1 }}>
             <Box sx={{ mt: 1 }}>

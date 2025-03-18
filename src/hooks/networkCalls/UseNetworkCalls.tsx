@@ -26,6 +26,7 @@ import {
 } from "../../Interfaces/InvoiceInterface";
 import { ServiceCategoryDropDownResponse } from "../../Interfaces/AddServiceInterface";
 import { ServiceRegisterRequest } from "../../Interfaces/RegisterService";
+import { UploadImageRequest } from "../../Interfaces/UploadImageInterface";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -221,6 +222,20 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const uploadImage = async (file: File): Promise<String> => {
+    const arrayBuffer = await file.arrayBuffer(); // Convert file to raw binary data
+    const byteArray = new Uint8Array(arrayBuffer); // Convert ArrayBuffer to Uint8Array
+
+    return ApiCalls<String>({
+      endpoint: "app/S3files/image/upload",
+      method: "POST",
+      data: byteArray,
+      headers: {
+        "Content-Type": "application/octet-stream",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -234,6 +249,7 @@ const UseNetworkCalls = () => {
     getPaySlip,
     dropDownCategory,
     registerServices,
+    uploadImage,
   };
 };
 

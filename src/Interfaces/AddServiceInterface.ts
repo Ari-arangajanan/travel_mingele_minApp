@@ -6,6 +6,7 @@ export interface AddServiceInterface {
     longitude: number;
     categoryId: number;
     serviceProviderId: number;
+    imageUrl: string;
     serviceTypeRegistrations: any[];
   }
 

@@ -125,9 +125,11 @@ const Home: React.FC = () => {
   return (
     <>
       <Fragment>
-        <AppBar position="fixed">
-          <NavBar handleBack={handleBack} />
-        </AppBar>
+        <Box sx={{ height: "60px" }}>
+          <AppBar position="fixed">
+            <NavBar heading="Services" handleBack={handleBack} />
+          </AppBar>
+        </Box>
         <Box
           position="fixed"
           sx={{

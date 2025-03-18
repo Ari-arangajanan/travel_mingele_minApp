@@ -4,6 +4,7 @@ interface Service {
     serviceName: string;
     description: string;
     basePrice: number;
+    imageUrl: string;
     id: number;
   }
   
@@ -17,7 +18,7 @@ interface Service {
   
   export const transformToCardData = (services: Service[]): CardData[] => {
     return services.map((service) => ({
-      imageUrl: "https://via.placeholder.com/128", // Replace with actual image URL if available
+      imageUrl: service.imageUrl, // Replace with actual image URL if available
       title: service.serviceName, // Map service name to title
       description: `${service.description} • Price: $${service.basePrice}`, // Combine description and price
       price: `$${service.basePrice.toFixed(2)}`, // Format price with two decimals
