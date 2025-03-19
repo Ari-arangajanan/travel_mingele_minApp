@@ -32,6 +32,7 @@ import {
   GetServicesRequest,
   GetServicesRequestByFilter,
 } from "../../Interfaces/ServiceInterface";
+import { UpdateServiceRequest } from "../../Interfaces/UpdateServiceInterface";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -258,6 +259,21 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const updateService = (params: UpdateServiceRequest): Promise<GetService> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<GetService>({
+      endpoint: "app/user/service/updateService",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -273,6 +289,7 @@ const UseNetworkCalls = () => {
     registerServices,
     uploadImage,
     getServiceByFilter,
+    updateService,
   };
 };
 

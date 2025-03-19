@@ -12,7 +12,7 @@ export const ROUTES = {
     PAYMENT:`/menu/payment/:name`,
     ADD_SERVICE:`/menu/products/addService`,
     SERVICE_REGISTER:"/menu/serviceRegister/:name",
-    UPDATE_SERVICE:"/menu/updateService/:name",
+    UPDATE_SERVICE:"/menu/updateService/:id",
     VIEW_SERVICE:`/menu/products/viewService/:id`,
   };
   

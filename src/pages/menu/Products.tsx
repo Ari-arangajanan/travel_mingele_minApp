@@ -83,7 +83,6 @@ const Products = () => {
         position="fixed"
         display="flex"
         justifyContent="center"
-        width="100%"
         sx={{
           top: "50px", // Adjust based on AppBar height (default is 64px for desktop)
           backgroundColor: "#f4f4f4", // Optional background color
@@ -92,8 +91,14 @@ const Products = () => {
           width: "100%",
         }}
       >
-        <Button variant="contained" onClick={handleAddClick}>
-          Add
+        <Button
+          sx={{
+            backgroundColor: "#191725",
+          }}
+          variant="contained"
+          onClick={handleAddClick}
+        >
+          Add Service
         </Button>
       </Box>
 

@@ -175,9 +175,27 @@ const ViewService = () => {
           </CardContent>
         </Card>
 
-        <Button variant="contained" onClick={() => navigateTo(ROUTES.PRODUCTS)}>
-          Back to Services
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            sx={{
+              backgroundColor: "#191725",
+            }}
+            variant="contained"
+            onClick={() => navigateTo(ROUTES.PRODUCTS)}
+          >
+            Back to Services
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: "#191725",
+              ml: 2,
+            }}
+            variant="contained"
+            onClick={() => id && navigateTo(ROUTES.UPDATE_SERVICE, { id })}
+          >
+            Update Services
+          </Button>
+        </Box>
       </Box>
     </Fragment>
   );

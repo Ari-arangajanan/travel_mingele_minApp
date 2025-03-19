@@ -99,7 +99,7 @@ export const routeConfig: RouteConfig[] = [
     name: "addService",
   },
   {
-    path: `${ROUTES.UPDATE_SERVICE}/:id`,
+    path: `${ROUTES.UPDATE_SERVICE}`,
     element: <UpdateService />,
     roles: COMMON_ROLES.SERVICE_ONLY,
     name: "updateService",
