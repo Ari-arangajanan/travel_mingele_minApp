@@ -51,7 +51,7 @@ const DetailModel: React.FC<BookingDetailModalProps> = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <Typography variant="h6">Booking #{booking?.id}</Typography>
-        <Typography>Price: ${booking?.price}</Typography>
+        <Typography>Price: Rs.{booking?.price}</Typography>
         <Typography>
           From: {new Date(booking?.bookingDateFrom || "").toLocaleString()}
         </Typography>

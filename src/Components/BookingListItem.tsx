@@ -33,7 +33,7 @@ const BookingListItem: React.FC<BookingListItemProps> = ({
                 style={{ color: "#333" }}
                 component="span"
               >
-                Price: ${booking.price}
+                Price: Rs.{booking.price}
               </Typography>
               <Typography
                 variant="body2"

@@ -6,10 +6,6 @@ import CategoryBAr from "../../Components/CategoryBAr";
 import { useNavigate } from "react-router-dom";
 import { GetCategoryRes } from "../../Interfaces/CategoryInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
-import {
-  GetServicesRequest,
-  GetServicesResponse,
-} from "../../Interfaces/ServiceInterface";
 import { transformToCardData } from "../../utils/CommonMethods";
 import {
   GetServicesCardRequest,

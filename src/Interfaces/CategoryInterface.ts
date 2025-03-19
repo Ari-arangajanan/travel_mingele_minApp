@@ -1,18 +1,27 @@
+
+
 // Request for fetching categories
 export interface GetCategoryReq {
     page: number; // Current page number
     limit: number; // Number of items per page
     categoryName?: string; // Optional category name for filtering
   }
+
+// Category model for reuse
+export interface Category {
+  id: number; // Unique identifier for the category
+  categoryName: string; // Name of the category
+  description: string; // Description of the category
+  status: number; // Status of the category (e.g., active/inactive)
+}
+
+export interface CategoryList {
+    categories: Category[]; // Array of category strings
+  }
   
   // Response for fetching categories
   export interface GetCategoryRes {
-    content: Array<{
-      id: number; // Unique identifier for the category
-      categoryName: string; // Name of the category
-      description: string; // Description of the category
-      status: number; // Status of the category (e.g., active/inactive)
-    }>;
+    content: Category[]; // Array of category objects
     pageable: {
       pageNumber: number; // Current page number
       pageSize: number; // Number of items per page
