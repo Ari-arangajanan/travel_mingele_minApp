@@ -13,6 +13,8 @@ import MyHires from "../business/MyHires";
 import MyClients from "../business/MyClients";
 import Payment from "../pages/payment/Payment";
 import AddServiceForm from "../pages/serviceRegister/AddServiceForm";
+import UpdateService from "../pages/approvedServices/UpdateService";
+import ViewService from "../pages/approvedServices/ViewService";
 
 // Define the RouteConfig interface
 interface RouteConfig {
@@ -93,8 +95,20 @@ export const routeConfig: RouteConfig[] = [
   {
     path: `${ROUTES.ADD_SERVICE}`,
     element: <AddServiceForm />,
-    roles: COMMON_ROLES.AUTHENTICATED,
+    roles: COMMON_ROLES.SERVICE_ONLY,
     name: "addService",
+  },
+  {
+    path: `${ROUTES.UPDATE_SERVICE}/:id`,
+    element: <UpdateService />,
+    roles: COMMON_ROLES.SERVICE_ONLY,
+    name: "updateService",
+  },
+  {
+    path: `${ROUTES.VIEW_SERVICE}`,
+    element: <ViewService />,
+    roles: COMMON_ROLES.SERVICE_ONLY,
+    name: "viewService",
   },
 
   // public Routes

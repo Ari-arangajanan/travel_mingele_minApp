@@ -22,7 +22,6 @@ const Products = () => {
   const [filters, setFilters] = useState<{ [key: string]: any }>({});
   const [open, setOpen] = useState(false);
   const { getService } = UseNetworkCalls();
-
   const { navigateTo } = NavigationUtils();
 
   const cardData = transformToCardData(serviceDataData?.content || []);
@@ -68,7 +67,7 @@ const Products = () => {
   };
 
   const handleSeeMore = (id: number) => {
-    alert(`card clicker ${id}`);
+    navigateTo(ROUTES.VIEW_SERVICE, { id });
   };
 
   const handleAddClick = () => {

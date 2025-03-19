@@ -20,7 +20,6 @@ import { ROUTES } from "../router/Routs";
 import { NavigationUtils } from "../utils/NavigationUtils";
 import { getUserDetail } from "../utils/CommonMethods";
 import { routeConfig } from "../router/RouteConfig";
-import { el } from "date-fns/locale";
 
 interface Props {
   heading?: string;
@@ -55,11 +54,9 @@ const NavBar: React.FC<Props> = ({ handleBack, heading }) => {
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-    console.log("Nav menu clicked========", event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-    console.log("Nav menu clicked", event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -71,7 +68,6 @@ const NavBar: React.FC<Props> = ({ handleBack, heading }) => {
   };
 
   const handleMenuClicks = (name: string) => {
-    console.log("Menu clicked+++++", name);
     setAnchorElUser(null); // Close the menu
     if (name === "About") {
       navigateTo(ROUTES.ABOUT, { name });

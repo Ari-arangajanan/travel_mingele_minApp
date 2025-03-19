@@ -27,6 +27,11 @@ import {
 import { ServiceCategoryDropDownResponse } from "../../Interfaces/AddServiceInterface";
 import { ServiceRegisterRequest } from "../../Interfaces/RegisterService";
 import { UploadImageRequest } from "../../Interfaces/UploadImageInterface";
+import {
+  GetService,
+  GetServicesRequest,
+  GetServicesRequestByFilter,
+} from "../../Interfaces/ServiceInterface";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -236,6 +241,23 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const getServiceByFilter = (
+    params: GetServicesRequestByFilter
+  ): Promise<GetService> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<GetService>({
+      endpoint: "app/user/service/getServiceById",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -250,6 +272,7 @@ const UseNetworkCalls = () => {
     dropDownCategory,
     registerServices,
     uploadImage,
+    getServiceByFilter,
   };
 };
 
