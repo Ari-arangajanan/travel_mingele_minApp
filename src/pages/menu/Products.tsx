@@ -1,7 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
-import { AppBar, Box, Button, TablePagination } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  CircularProgress,
+  TablePagination,
+  Typography,
+} from "@mui/material";
 import NavBar from "../../Components/NavBar";
 import { GetServicesRequest } from "../../Interfaces/ServiceInterface";
 import UseNetworkCalls from "../../hooks/networkCalls/UseNetworkCalls";
@@ -73,6 +80,20 @@ const Products = () => {
   const handleAddClick = () => {
     navigateTo(ROUTES.ADD_SERVICE);
   };
+
+  if (loading) {
+    return (
+      <CircularProgress sx={{ display: "block", margin: "auto", mt: 5 }} />
+    );
+  }
+
+  if (error) {
+    return (
+      <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>
+        {error}
+      </Typography>
+    );
+  }
 
   return (
     <Fragment>

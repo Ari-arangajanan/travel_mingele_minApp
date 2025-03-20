@@ -64,6 +64,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             size="small"
             className="upload-text"
             onClick={handleUpload}
+            sx={{
+              ml: 2,
+              borderColor: "#13121D", // Outline color changed to red
+              color: "red", // Text color changed to red for consistency
+              "&:hover": {
+                backgroundColor: "#13121D", // Slightly darker for hover effect
+                borderColor: "darkred", // Darker red on hover
+              },
+            }}
           >
             Click to upload
           </Button>
@@ -105,7 +114,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               title="Select an image file to update"
             />
             <label htmlFor="file-upload">
-              <Button component="span" variant="outlined" size="small">
+              <Button
+                component="span"
+                variant="outlined"
+                size="small"
+                sx={{
+                  borderColor: "#13121D", // Outline color changed to red
+                  color: "#191725", // Text color changed to red for consistency
+                  "&:hover": {
+                    // backgroundColor: "#13121D", // Slightly darker for hover effect
+                    borderColor: "darkred", // Darker red on hover
+                  },
+                }}
+              >
                 Update Image
               </Button>
             </label>

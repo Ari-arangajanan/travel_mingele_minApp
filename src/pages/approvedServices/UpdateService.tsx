@@ -136,13 +136,13 @@ const UpdateService = () => {
     <Fragment>
       <Box>
         <AppBar position="fixed">
-          <NavBar handleBack={handleBack} heading="View Service" />
+          <NavBar handleBack={handleBack} heading="Update Service" />
         </AppBar>
       </Box>
-      <Box sx={{ maxWidth: "800px", margin: "auto", padding: 3, marginTop: 5 }}>
-        <Typography variant="h4" gutterBottom>
+      <Box sx={{ width: "100%", padding: 3, marginTop: 5 }}>
+        {/* <Typography variant="h4" gutterBottom>
           Update Service
-        </Typography>
+        </Typography> */}
 
         <Card sx={{ marginBottom: 2 }}>
           <CardContent>

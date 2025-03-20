@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ROUTES } from "../../router/Routs";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import {
@@ -8,7 +8,6 @@ import {
   Card,
   Typography,
   Divider,
-  Avatar,
   CircularProgress,
   Button,
 } from "@mui/material";
@@ -141,7 +140,7 @@ const Profile = () => {
               variant="contained"
               color="primary"
               disabled={!newAvatar || updating}
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, backgroundColor: "#191725" }}
               onClick={() => handleUpdateAvatar()}
             >
               {updating ? "updating.." : "Update Avatar"}

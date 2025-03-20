@@ -35,6 +35,14 @@ import {
   UpdateAvatarRequest,
   UserDetailsResponse,
 } from "../../Interfaces/ProfileInterface";
+import {
+  UserPaymentAccountRequest,
+  UserPaymentAccountResponse,
+} from "../../Interfaces/AccountInterface";
+import {
+  DashBoardInterfaceRequest,
+  DashBoardStatisticResponse,
+} from "../../Interfaces/DashBoardInterface";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -303,6 +311,51 @@ const UseNetworkCalls = () => {
     });
   };
 
+  // get payment account
+  const getMyPaymentAccount = (): Promise<UserPaymentAccountResponse> => {
+    return ApiCalls<UserPaymentAccountResponse>({
+      endpoint: "app/user/payment/getPaymentAccount",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const createPaymentAccount = (
+    params: UserPaymentAccountRequest
+  ): Promise<UserPaymentAccountResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<UserPaymentAccountResponse>({
+      endpoint: "app/user/payment/create",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const getDashBoard = (
+    params: DashBoardInterfaceRequest
+  ): Promise<DashBoardStatisticResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<DashBoardStatisticResponse>({
+      endpoint: "app/dashboard/getDashboard",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -321,6 +374,9 @@ const UseNetworkCalls = () => {
     updateService,
     getMe,
     updateAvatar,
+    getMyPaymentAccount,
+    createPaymentAccount,
+    getDashBoard,
   };
 };
 
