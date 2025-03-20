@@ -26,13 +26,15 @@ import {
 } from "../../Interfaces/InvoiceInterface";
 import { ServiceCategoryDropDownResponse } from "../../Interfaces/AddServiceInterface";
 import { ServiceRegisterRequest } from "../../Interfaces/RegisterService";
-import { UploadImageRequest } from "../../Interfaces/UploadImageInterface";
 import {
   GetService,
-  GetServicesRequest,
   GetServicesRequestByFilter,
 } from "../../Interfaces/ServiceInterface";
 import { UpdateServiceRequest } from "../../Interfaces/UpdateServiceInterface";
+import {
+  UpdateAvatarRequest,
+  UserDetailsResponse,
+} from "../../Interfaces/ProfileInterface";
 
 const UseNetworkCalls = () => {
   const getServiceCategory = (
@@ -274,6 +276,33 @@ const UseNetworkCalls = () => {
     });
   };
 
+  const getMe = (): Promise<UserDetailsResponse> => {
+    return ApiCalls<UserDetailsResponse>({
+      endpoint: "app/user/getMe",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const updateAvatar = (
+    params: UpdateAvatarRequest
+  ): Promise<UserDetailsResponse> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<UserDetailsResponse>({
+      endpoint: "app/user/updateAvatar",
+      method: "POST",
+      data: payload.avatar,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return {
     getServiceCategory,
     login,
@@ -290,6 +319,8 @@ const UseNetworkCalls = () => {
     uploadImage,
     getServiceByFilter,
     updateService,
+    getMe,
+    updateAvatar,
   };
 };
 

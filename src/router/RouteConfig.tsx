@@ -6,7 +6,7 @@ import DashBoard from "../business/DashBoard";
 import About from "../pages/menu/About";
 import Products from "../pages/menu/Products";
 import Account from "../pages/settings/Account";
-import Profile from "../pages/settings/Profile";
+import Profile from "../pages/profile/Profile";
 import { ROUTES } from "./Routs";
 import { COMMON_ROLES } from "../Authentication/RoleAccess";
 import MyHires from "../business/MyHires";
