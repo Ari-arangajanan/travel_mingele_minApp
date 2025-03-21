@@ -304,7 +304,7 @@ const UseNetworkCalls = () => {
     return ApiCalls<UserDetailsResponse>({
       endpoint: "app/user/updateAvatar",
       method: "POST",
-      data: payload.avatar,
+      data: payload,
       headers: {
         "Content-Type": "application/json",
       },
