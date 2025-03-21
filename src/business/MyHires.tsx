@@ -140,9 +140,10 @@ const MyHires = () => {
     // setPayOpen(true);
     // setSelectPayment(selectedBooking);
     if (selectedBooking?.id !== undefined) {
-      navigateTo(`${ROUTES.PAYMENT}/${selectedBooking.orderId}`, {
-        state: JSON.stringify({ selectedBooking }),
-      });
+      // navigateTo(`${ROUTES.PAYMENT}/${selectedBooking.orderId}`, {
+      //   state: JSON.stringify({ selectedBooking }),
+      // });
+      navigateTo(ROUTES.PAYMENT, { orderId: selectedBooking?.orderId });
     } else {
       alert("Booking ID is undefined");
     }

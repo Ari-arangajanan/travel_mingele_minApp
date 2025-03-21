@@ -68,7 +68,7 @@ export const routeConfig: RouteConfig[] = [
   {
     path: ROUTES.ACCOUNT,
     element: <Account />,
-    roles: COMMON_ROLES.AUTHENTICATED,
+    roles: COMMON_ROLES.SERVICE_ONLY,
     name: "Account",
     category: "setting",
   },
@@ -87,7 +87,7 @@ export const routeConfig: RouteConfig[] = [
     category: "page",
   },
   {
-    path: `${ROUTES.PAYMENT}/:orderId`,
+    path: `${ROUTES.PAYMENT}`,
     element: <Payment />,
     roles: COMMON_ROLES.AUTHENTICATED,
     name: "payment",

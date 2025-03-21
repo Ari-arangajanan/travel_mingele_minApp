@@ -114,7 +114,7 @@ const Payment = () => {
 
   const handleCardPay = async () => {
     if (selectPayment && selectPayment.id !== undefined) {
-      const paymentUrl = await payment(selectPayment.id, "CARD");
+      const paymentUrl = await payment(selectPayment.booking.id, "CARD");
       if (paymentUrl) {
         const form = document.createElement("form");
         form.method = "POST";

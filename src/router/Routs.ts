@@ -9,7 +9,7 @@ export const ROUTES = {
     PROFILE:"/profile/profile/:name",
     PRODUCTS:"/menu/products/:page",
     ABOUT:"/menu/about/:page",
-    PAYMENT:`/menu/payment/:name`,
+    PAYMENT:`/menu/payment/:orderId`,
     ADD_SERVICE:`/menu/products/addService`,
     SERVICE_REGISTER:"/menu/serviceRegister/:name",
     UPDATE_SERVICE:"/menu/updateService/:id",
