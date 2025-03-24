@@ -14,7 +14,10 @@ import {
   GetCategoryReq,
   GetCategoryRes,
 } from "../../Interfaces/CategoryInterface";
-import { PaymentRequest } from "../../Interfaces/Paymenty";
+import {
+  PaymentRequest,
+  PaymentSuccessRequest,
+} from "../../Interfaces/Paymenty";
 import {
   TelegramIdRequest,
   TokenResponse,
@@ -169,6 +172,21 @@ const UseNetworkCalls = () => {
     };
     return ApiCalls<String>({
       endpoint: "app/user/payment/pay",
+      method: "POST",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const payMentSuccess = (params: PaymentSuccessRequest): Promise<any> => {
+    // Use the params object directly to construct the payload
+    const payload: Record<string, any> = {
+      ...params,
+    };
+    return ApiCalls<any>({
+      endpoint: "app/user/payment/paySuccess",
       method: "POST",
       data: payload,
       headers: {
@@ -377,6 +395,7 @@ const UseNetworkCalls = () => {
     getMyPaymentAccount,
     createPaymentAccount,
     getDashBoard,
+    payMentSuccess,
   };
 };
 

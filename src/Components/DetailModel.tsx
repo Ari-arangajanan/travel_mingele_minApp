@@ -31,6 +31,7 @@ interface BookingDetailModalProps {
     price: number;
     bookingDateFrom: string;
     bookingDateTo: string;
+    service_name: string;
     status: number;
   } | null;
   buttons: ButtonConfig[];
@@ -51,6 +52,7 @@ const DetailModel: React.FC<BookingDetailModalProps> = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <Typography variant="h6">Booking #{booking?.id}</Typography>
+        <Typography>Service Name: {booking?.service_name}</Typography>
         <Typography>Price: Rs.{booking?.price}</Typography>
         <Typography>
           From: {new Date(booking?.bookingDateFrom || "").toLocaleString()}

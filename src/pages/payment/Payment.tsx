@@ -1,5 +1,17 @@
 import { Fragment } from "@emotion/react/jsx-runtime";
-import { AppBar, Box, Button, Grid, Paper, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import NavBar from "../../Components/NavBar";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { ROUTES } from "../../router/Routs";
@@ -13,7 +25,7 @@ const Payment = () => {
   const { navigateTo } = NavigationUtils(); // Navigation utility for navigating to different routes
   const { state } = useLocation(); // Extract payment details from navigation state
   const { orderId } = useParams(); // Extract order ID from URL params
-  const { getInvoice, pay, getPaySlip } = UseNetworkCalls();
+  const { getInvoice, pay, getPaySlip, payMentSuccess } = UseNetworkCalls();
 
   //handle data
   const [invoiceData, setInvoiceData] = useState<PaymentInvoiceResponse>();
@@ -25,6 +37,8 @@ const Payment = () => {
   const [selectPayment, setSelectPayment] =
     useState<PaymentInvoiceResponse | null>(null);
   const [searchParams] = useSearchParams(); // Extract query params
+  const [bankReceiptModalOpen, setBankReceiptModalOpen] = useState(false);
+  const [bankReceiptNumber, setBankReceiptNumber] = useState("");
 
   const handleBack = () => {
     navigateTo(ROUTES.MYHIRES);
@@ -108,8 +122,15 @@ const Payment = () => {
     console.log("Pay", selectPayment);
   };
 
+  // const handleBankPay = () => {
+  //   alert("BankPay: " + selectPayment?.id);
+  // };
   const handleBankPay = () => {
-    alert("BankPay: " + selectPayment?.id);
+    if (selectPayment?.id) {
+      setBankReceiptModalOpen(true);
+    } else {
+      alert("No selected payment");
+    }
   };
 
   const handleCardPay = async () => {
@@ -155,6 +176,38 @@ const Payment = () => {
   const handleCloseModal = () => {
     setPayOpen(false);
     setSelectPayment(null);
+  };
+
+  // payment Submit
+  const handleSubmitBankPayment = async () => {
+    if (!bankReceiptNumber || !selectPayment?.paymentOrderId) {
+      alert("Please enter a valid bank receipt number");
+      return;
+    }
+
+    try {
+      const response = await payMentSuccess({
+        paymentMethod: "ONLINE",
+        orderId: selectPayment.paymentOrderId,
+        receiptNumber: bankReceiptNumber,
+      });
+
+      if (response) {
+        alert("Payment Success!");
+        setBankReceiptModalOpen(false);
+        setBankReceiptNumber("");
+        // Refresh invoice data
+        const updatedInvoice = await getInvoice({
+          orderId: selectPayment.paymentOrderId,
+        });
+        setInvoiceData(updatedInvoice);
+      } else {
+        alert("Payment failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Bank payment error:", error);
+      alert("Something went wrong while processing payment.");
+    }
   };
 
   //handle payment
@@ -379,6 +432,38 @@ const Payment = () => {
             title="Payment Details"
           />
         </Paper>
+        {bankReceiptModalOpen && (
+          <Dialog
+            open={bankReceiptModalOpen}
+            onClose={() => setBankReceiptModalOpen(false)}
+          >
+            <DialogTitle>Enter Bank Receipt Number</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Bank Receipt Number"
+                fullWidth
+                variant="outlined"
+                value={bankReceiptNumber}
+                onChange={(e) => setBankReceiptNumber(e.target.value)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  setBankReceiptModalOpen(false);
+                  setBankReceiptNumber("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button variant="contained" onClick={handleSubmitBankPayment}>
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
       </Box>
     </Fragment>
   );

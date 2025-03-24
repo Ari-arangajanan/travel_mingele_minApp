@@ -1,4 +1,5 @@
 import {
+  Box,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -28,27 +29,36 @@ const BookingListItem: React.FC<BookingListItemProps> = ({
           primary={`Booking #${booking.id}`}
           secondary={
             <>
-              <Typography
-                variant="body2"
-                style={{ color: "#333" }}
-                component="span"
-              >
-                Price: Rs.{booking.price}
-              </Typography>
-              <Typography
-                variant="body2"
-                style={{ color: "#333" }}
-                component="span"
-              >
-                From: {new Date(booking.bookingDateFrom).toLocaleString()}
-              </Typography>
-              <Typography
-                variant="body2"
-                style={{ color: "#333" }}
-                component="span"
-              >
-                To: {new Date(booking.bookingDateTo).toLocaleString()}
-              </Typography>
+              <Box display="flex" flexDirection="column">
+                <Typography
+                  variant="body2"
+                  style={{ color: "#333" }}
+                  component="span"
+                >
+                  Price: Rs.{booking.price}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  style={{ color: "#333" }}
+                  component="span"
+                >
+                  Service Name: {booking.service_name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  style={{ color: "#333" }}
+                  component="span"
+                >
+                  From: {new Date(booking.bookingDateFrom).toLocaleString()}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  style={{ color: "#333" }}
+                  component="span"
+                >
+                  To: {new Date(booking.bookingDateTo).toLocaleString()}
+                </Typography>
+              </Box>
             </>
           }
         />
